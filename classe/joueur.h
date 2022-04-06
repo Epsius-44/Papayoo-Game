@@ -63,9 +63,9 @@ public:
         cout << "Choisir une carte entre 1 et " << this->cartes.size() << " : ";
         cin >> idCarteChoisi;
         Carte* carteChoisi = this->cartes[idCarteChoisi - 1];
-        cout << "Le joueur " << this->getNom() << "joue : ";
+        cout << "Le joueur " << this->getNom() << " joue : ";
         carteChoisi->afficherCarte();
-        this->cartes.erase(this->cartes.begin() + idCarteChoisi);
+        this->cartes.erase(this->cartes.begin() + idCarteChoisi - 1);
         return carteChoisi;
     }
 };
