@@ -2,6 +2,7 @@
 #include <vector> // pour time()
 #include <stdlib.h>     /* srand, rand */
 #include "classe/joueur.h"
+#include "classe/pli.h"
 using namespace std;
 
 int main(int argc, char **argv)
