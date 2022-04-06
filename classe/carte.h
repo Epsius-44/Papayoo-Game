@@ -5,12 +5,10 @@ private:
     unsigned int identifiant[2];
     unsigned int points;
 public:
-    Carte(unsigned int identifiant[2], unsigned int points){
+    Carte(unsigned int valeur, unsigned int couleur, unsigned int points){
+        this->identifiant[0] = valeur;
+        this->identifiant[1] = couleur;
         this->points = points;
-        for (int i=0 ; i < 2 ; i++)
-        {
-            this->identifiant[i] += identifiant[i];
-        }
     }
     unsigned int getValeur(){
         return this->identifiant[0];
