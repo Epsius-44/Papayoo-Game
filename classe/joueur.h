@@ -53,6 +53,7 @@ public:
 
 class Humain : public Joueur{
 public:
+    Humain(string nom) : Joueur(nom) {}
     virtual vector<Carte*> donneTroisCarte(){
         shuffle(this->cartes.begin(), this->cartes.end(), default_random_engine(666));
         return vector<Carte*>(this->cartes.begin(), this->cartes.begin()+2);
@@ -63,6 +64,8 @@ public:
         cout << "Choisir une carte entre 1 et " << this->cartes.size() << " : ";
         cin >> idCarteChoisi;
         Carte* carteChoisi = this->cartes[idCarteChoisi - 1];
+        cout << "Le joueur " << this->getNom() << "joue : ";
+        carteChoisi->afficherCarte();
         this->cartes.erase(this->cartes.begin() + idCarteChoisi);
         return carteChoisi;
     }
@@ -70,6 +73,7 @@ public:
 
 class Bot : public Joueur{
 public:
+    Bot(string nom) : Joueur(nom) {}
     virtual vector<Carte*> donneTroisCarte(){
         shuffle(this->cartes.begin(), this->cartes.end(), default_random_engine(666));
         return vector<Carte*>(this->cartes.begin(), this->cartes.begin()+2);
