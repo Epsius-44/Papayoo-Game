@@ -1,5 +1,3 @@
-using namespace std;
-
 class Pli {
 private:
     unsigned int idJoueurDebute;

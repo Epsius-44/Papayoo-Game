@@ -1,5 +1,3 @@
-using namespace std;
-
 class Joueur{
 private:
     string nom;
@@ -56,6 +54,7 @@ public:
     Humain(string nom) : Joueur(nom) {}
     virtual vector<Carte*> donneTroisCarte(){
         shuffle(this->cartes.begin(), this->cartes.end(), default_random_engine(666));
+        // TODO Remove card
         return vector<Carte*>(this->cartes.begin(), this->cartes.begin()+2);
     }
     virtual Carte* jouerUneCarte(){

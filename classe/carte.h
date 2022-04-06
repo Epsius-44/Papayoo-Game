@@ -1,5 +1,3 @@
-using namespace std;
-
 class Carte {
 private:
     unsigned int identifiant[2];
