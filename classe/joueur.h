@@ -13,6 +13,13 @@ public:
         this->cartes = {};
     }
 
+    void afficherCarte(){
+        for (int i = 0; i < this->cartes.size() ; ++i) {
+            cout << i << " | ";
+            this->cartes[i]->afficherCarte();
+        }
+    }
+
     void recoisCartes(vector<Carte*> carteEnPlus){
         this->cartes.insert(this->cartes.end(), carteEnPlus.begin(), carteEnPlus.end());
     }
@@ -51,7 +58,13 @@ public:
         return vector<Carte*>(this->cartes.begin(), this->cartes.begin()+2);
     }
     virtual Carte* jouerUneCarte(){
-        return this->cartes[rand()];
+        unsigned int idCarteChoisi;
+        this->afficherCarte();
+        cout << "Choisir une carte entre 1 et " << this->cartes.size() << " : ";
+        cin >> idCarteChoisi;
+        Carte* carteChoisi = this->cartes[idCarteChoisi - 1];
+        this->cartes.erase(this->cartes.begin() + idCarteChoisi);
+        return carteChoisi;
     }
 };
 
@@ -62,6 +75,6 @@ public:
         return vector<Carte*>(this->cartes.begin(), this->cartes.begin()+2);
     }
     virtual Carte* jouerUneCarte(){
-        return this->cartes[rand()];
+        return this->cartes[rand() % this->cartes.size()];
     }
 };
