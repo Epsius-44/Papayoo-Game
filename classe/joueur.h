@@ -13,6 +13,13 @@ public:
         this->cartes = {};
     }
 
+    void afficherCarte(){
+        for (int i = 0; i < this->cartes.size() ; ++i) {
+            // TODO Remplacer le cout par une méthode dans la classe carte
+            cout << "(" << i + 1 << ") " << this->cartes[i]->getValeur() << ":" << this->cartes[i]->getCouleur() << "|" << this->cartes[i]->getPoints() << endl;
+        }
+    }
+
     void recoisCartes(vector<Carte*> carteEnPlus){
         this->cartes.insert(this->cartes.end(), carteEnPlus.begin(), carteEnPlus.end());
     }
@@ -52,6 +59,7 @@ public:
     }
     virtual Carte* jouerUneCarte(){
         unsigned int idCarteChoisi;
+        this->afficherCarte();
         cout << "Choisir une carte entre 1 et " << this->cartes.size() << " : ";
         cin >> idCarteChoisi;
         Carte* carteChoisi = this->cartes[idCarteChoisi - 1];
