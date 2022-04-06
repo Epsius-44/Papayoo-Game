@@ -24,7 +24,7 @@ public:
         this->cartes.insert(this->cartes.end(), carteEnPlus.begin(), carteEnPlus.end());
     }
     int unsigned lancerDe(){
-        return rand() % 5 + 1;
+        return rand() % 4;
     }
 
     virtual vector<Carte*> donneTroisCarte(){
