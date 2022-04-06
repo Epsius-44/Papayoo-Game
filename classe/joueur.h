@@ -46,12 +46,22 @@ public:
 
 class Humain : public Joueur{
 public:
-    //virtual Carte*[3] donneTroisCarte(){}
-    //virtual Carte* jouerUneCarte(){}
+    virtual vector<Carte*> donneTroisCarte(){
+        shuffle(this->cartes.begin(), this->cartes.end(), default_random_engine(666));
+        return vector<Carte*>(this->cartes.begin(), this->cartes.begin()+2);
+    }
+    virtual Carte* jouerUneCarte(){
+        return this->cartes[rand()];
+    }
 };
 
 class Bot : public Joueur{
 public:
-    //virtual Carte*[3] donneTroisCarte(){}
-    //virtual Carte* jouerUneCarte(){}
+    virtual vector<Carte*> donneTroisCarte(){
+        shuffle(this->cartes.begin(), this->cartes.end(), default_random_engine(666));
+        return vector<Carte*>(this->cartes.begin(), this->cartes.begin()+2);
+    }
+    virtual Carte* jouerUneCarte(){
+        return this->cartes[rand()];
+    }
 };
