@@ -1,6 +1,3 @@
-#include <iostream>
-#include <vector>
-
 using namespace std;
 
 class Pli {
@@ -16,20 +13,20 @@ public:
     unsigned int calculPointPli() {
         unsigned int totalPoint = 0;
         for (int i = 0; i < this->cartesJouer.size(); i++) {
-            totalPoint += this->cartesJouer[i].getPoints();
+            totalPoint += this->cartesJouer[i]->getPoints();
         }
         return totalPoint;
     }
 
     unsigned int trouveGagnantPli() {
         unsigned int nombreJoueur = this->cartesJouer.size();
-        unsigned int couleurDebut = this->cartesJouer[0].getCouleur();
+        unsigned int couleurDebut = this->cartesJouer[0]->getCouleur();
         unsigned int idJoueurGagnant = this->idJoueurDebute;
-        unsigned int valeurCarteGagnant = this->cartesJouer[0].getValeur();
+        unsigned int valeurCarteGagnant = this->cartesJouer[0]->getValeur();
         for (int i = 1; i < nombreJoueur; i++) {
-            if (this->cartesJouer[i].getCouleur() == couleurDebut and this->cartesJouer[i] > valeurCarteGagnant){
+            if (this->cartesJouer[i]->getCouleur() == couleurDebut and this->cartesJouer[i]->getValeur() > valeurCarteGagnant){
                 idJoueurGagnant = this->idJoueurDebute+i;
-                valeurCarteGagnant = this->cartesJouer[i].getValeur();
+                valeurCarteGagnant = this->cartesJouer[i]->getValeur();
             }
         }
         return idJoueurGagnant;
@@ -44,7 +41,7 @@ public:
     }
 
     vector<Carte *> getCarteJoueur() {
-        return this->cartesJouer();
+        return this->cartesJouer;
     }
 
     void nouveauPli(unsigned int idJoueurDebute) {

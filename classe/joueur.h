@@ -1,6 +1,3 @@
-#include <iostream>
-#include <vector>
-#include <stdlib.h>
 using namespace std;
 
 class Joueur{
@@ -17,13 +14,14 @@ public:
     }
 
     void recoisCartes(vector<Carte*> carteEnPlus){
-        this->cartes.insert(this->cartes.end(), carteEnPlus);
+        this->cartes.insert(this->cartes.end(), carteEnPlus.begin(), carteEnPlus.end());
     }
     int unsigned lancerDe(){
         return rand() % 5 + 1;
     }
-    virtual Carte*[3] donneTroisCarte(){}
-    virtual Carte* jouerUneCarte(){}
+
+    //virtual Carte*[3] donneTroisCarte(){};
+    //virtual Carte* jouerUneCarte(){}
 
     string getNom(){
         return this->nom;
@@ -44,12 +42,12 @@ public:
 
 class Humain : public Joueur{
 public:
-    virtual Carte*[3] donneTroisCarte(){}
-    virtual Carte* jouerUneCarte(){}
+    //virtual Carte*[3] donneTroisCarte(){}
+    //virtual Carte* jouerUneCarte(){}
 };
 
 class Bot : public Joueur{
 public:
-    virtual Carte*[3] donneTroisCarte(){}
-    virtual Carte* jouerUneCarte(){}
+    //virtual Carte*[3] donneTroisCarte(){}
+    //virtual Carte* jouerUneCarte(){}
 };
