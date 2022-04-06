@@ -22,6 +22,11 @@ public:
         return this->points;
     }
 
+    void afficherCarte(){
+        string couleur[5] = {"trèfle", "carreau", "pic", "coeur", "payoo"};
+        cout << "Carte : " << identifiant[0] << " de " << couleur[identifiant[1]] << endl;
+    }
+
     void setPoint(unsigned int points){
         this->points = points;
     }

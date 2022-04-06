@@ -15,8 +15,8 @@ public:
 
     void afficherCarte(){
         for (int i = 0; i < this->cartes.size() ; ++i) {
-            // TODO Remplacer le cout par une méthode dans la classe carte
-            cout << "(" << i + 1 << ") " << this->cartes[i]->getValeur() << ":" << this->cartes[i]->getCouleur() << "|" << this->cartes[i]->getPoints() << endl;
+            cout << i << " | ";
+            this->cartes[i]->afficherCarte();
         }
     }
 
