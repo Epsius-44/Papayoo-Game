@@ -13,9 +13,9 @@ public:
         this->cartes = {};
     }
 
-    void afficherCarte(){
+    void afficherCartes(){
         for (int i = 0; i < this->cartes.size() ; ++i) {
-            cout << i << " | ";
+            cout << i + 1 << " | ";
             this->cartes[i]->afficherCarte();
         }
     }
