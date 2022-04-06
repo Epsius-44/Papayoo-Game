@@ -75,6 +75,6 @@ public:
         return vector<Carte*>(this->cartes.begin(), this->cartes.begin()+2);
     }
     virtual Carte* jouerUneCarte(){
-        return this->cartes[rand()];
+        return this->cartes[rand() % this->cartes.size()];
     }
 };
