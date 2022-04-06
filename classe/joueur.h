@@ -20,8 +20,12 @@ public:
         return rand() % 5 + 1;
     }
 
-    //virtual Carte*[3] donneTroisCarte(){};
-    //virtual Carte* jouerUneCarte(){}
+    virtual vector<Carte*> donneTroisCarte(){
+        return {nullptr};
+    };
+    virtual Carte* jouerUneCarte(){
+        return nullptr;
+    };
 
     string getNom(){
         return this->nom;
