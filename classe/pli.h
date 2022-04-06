@@ -29,7 +29,7 @@ public:
                 valeurCarteGagnant = this->cartesJouer[i]->getValeur();
             }
         }
-        return idJoueurGagnant;
+        return idJoueurGagnant%nombreJoueur;
     }
 
     unsigned int getIdJoueurDebute() {
