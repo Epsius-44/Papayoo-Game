@@ -51,7 +51,12 @@ public:
         return vector<Carte*>(this->cartes.begin(), this->cartes.begin()+2);
     }
     virtual Carte* jouerUneCarte(){
-        return this->cartes[rand()];
+        unsigned int idCarteChoisi;
+        cout << "Choisir une carte entre 1 et " << this->cartes.size() << " : ";
+        cin >> idCarteChoisi;
+        Carte* carteChoisi = this->cartes[idCarteChoisi - 1];
+        this->cartes.erase(this->cartes.begin() + idCarteChoisi);
+        return carteChoisi;
     }
 };
 
