@@ -13,9 +13,9 @@ public:
         this->cartes = {};
     }
 
-    void afficherCarte(){
+    void afficherCartes(){
         for (int i = 0; i < this->cartes.size() ; ++i) {
-            cout << i << " | ";
+            cout << i + 1 << " | ";
             this->cartes[i]->afficherCarte();
         }
     }
@@ -24,7 +24,7 @@ public:
         this->cartes.insert(this->cartes.end(), carteEnPlus.begin(), carteEnPlus.end());
     }
     int unsigned lancerDe(){
-        return rand() % 5 + 1;
+        return rand() % 4 + 1;
     }
 
     virtual vector<Carte*> donneTroisCarte(){
@@ -59,7 +59,7 @@ public:
     }
     virtual Carte* jouerUneCarte(){
         unsigned int idCarteChoisi;
-        this->afficherCarte();
+        this->afficherCartes();
         cout << "Choisir une carte entre 1 et " << this->cartes.size() << " : ";
         cin >> idCarteChoisi;
         Carte* carteChoisi = this->cartes[idCarteChoisi - 1];
