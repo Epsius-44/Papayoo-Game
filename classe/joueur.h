@@ -40,8 +40,8 @@ public:
     int unsigned getPoints(){
         return this->points;
     }
-    void setPoints(int unsigned points){
-        this->points = points;
+    void addPoints(int unsigned points){
+        this->points += points;
     }
     vector<Carte*> getCartes(){
         return this->cartes;
