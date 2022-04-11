@@ -1,12 +1,10 @@
-using namespace std;
-
 class Pli {
 private:
     unsigned int idJoueurDebute;
     vector<Carte*> cartesJouer = {};
 
 public:
-    void ajouterCarteJouer(Carte *carte) {
+    void ajouterCarteJouer(Carte* carte) {
         this->cartesJouer.insert(this->cartesJouer.end(), carte);
     }
 
@@ -23,7 +21,7 @@ public:
         unsigned int couleurDebut = this->cartesJouer[0]->getCouleur();
         unsigned int idJoueurGagnant = this->idJoueurDebute;
         unsigned int valeurCarteGagnant = this->cartesJouer[0]->getValeur();
-        for (int i = 1; i < nombreJoueur; i++) {
+        for (int i = 0; i < nombreJoueur; i++) {
             if (this->cartesJouer[i]->getCouleur() == couleurDebut and this->cartesJouer[i]->getValeur() > valeurCarteGagnant){
                 idJoueurGagnant = this->idJoueurDebute+i;
                 valeurCarteGagnant = this->cartesJouer[i]->getValeur();

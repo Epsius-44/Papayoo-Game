@@ -1,5 +1,3 @@
-using namespace std;
-
 class Joueur{
 private:
     string nom;
@@ -40,8 +38,8 @@ public:
     int unsigned getPoints(){
         return this->points;
     }
-    void setPoints(int unsigned points){
-        this->points = points;
+    void addPoints(int unsigned points){
+        this->points += points;
     }
     vector<Carte*> getCartes(){
         return this->cartes;
@@ -53,8 +51,10 @@ public:
 
 class Humain : public Joueur{
 public:
+    Humain(string nom) : Joueur(nom) {}
     virtual vector<Carte*> donneTroisCarte(){
         shuffle(this->cartes.begin(), this->cartes.end(), default_random_engine(666));
+        // TODO Remove card
         return vector<Carte*>(this->cartes.begin(), this->cartes.begin()+2);
     }
     virtual Carte* jouerUneCarte(){
@@ -63,13 +63,16 @@ public:
         cout << "Choisir une carte entre 1 et " << this->cartes.size() << " : ";
         cin >> idCarteChoisi;
         Carte* carteChoisi = this->cartes[idCarteChoisi - 1];
-        this->cartes.erase(this->cartes.begin() + idCarteChoisi);
+        cout << "Le joueur " << this->getNom() << " joue : ";
+        carteChoisi->afficherCarte();
+        this->cartes.erase(this->cartes.begin() + idCarteChoisi - 1);
         return carteChoisi;
     }
 };
 
 class Bot : public Joueur{
 public:
+    Bot(string nom) : Joueur(nom) {}
     virtual vector<Carte*> donneTroisCarte(){
         shuffle(this->cartes.begin(), this->cartes.end(), default_random_engine(666));
         return vector<Carte*>(this->cartes.begin(), this->cartes.begin()+2);
