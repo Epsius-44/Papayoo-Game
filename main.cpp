@@ -15,7 +15,7 @@ using namespace std;
 
 int main(int argc, char **argv)
 {
-    Jeu test(5,5);
-    test.initialisationManche();
+    Jeu test(1,1);
+    test.manche();
     return 0;
 }

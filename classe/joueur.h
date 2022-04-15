@@ -53,9 +53,9 @@ class Humain : public Joueur{
 public:
     Humain(string nom) : Joueur(nom) {}
     virtual vector<Carte*> donneTroisCarte(){
-        shuffle(this->cartes.begin(), this->cartes.end(), default_random_engine(666));
+        //shuffle(this->cartes.begin(), this->cartes.end(), default_random_engine(666));
         // TODO Remove card
-        return vector<Carte*>(this->cartes.begin(), this->cartes.begin()+2);
+        return vector<Carte*>(this->cartes.begin(), this->cartes.begin());
     }
     virtual Carte* jouerUneCarte(){
         unsigned int idCarteChoisi;
@@ -75,7 +75,7 @@ public:
     Bot(string nom) : Joueur(nom) {}
     virtual vector<Carte*> donneTroisCarte(){
         shuffle(this->cartes.begin(), this->cartes.end(), default_random_engine(666));
-        return vector<Carte*>(this->cartes.begin(), this->cartes.begin()+2);
+        return vector<Carte*>(this->cartes.begin(), this->cartes.begin()+3);
     }
     virtual Carte* jouerUneCarte(){
         return this->cartes[rand() % this->cartes.size()];
