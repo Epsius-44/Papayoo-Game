@@ -11,7 +11,6 @@ using namespace std;
 #include "classe/joueur.h"
 #include "classe/pli.h"
 #include "classe/jeu.h"
-#include "classe/affichage.h"
 
 int main(int argc, char **argv)
 {
