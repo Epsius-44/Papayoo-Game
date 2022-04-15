@@ -21,7 +21,7 @@ public:
     }
 
     void afficherCarte(){
-        string couleur[5] = {"trèfle", "carreau", "pic", "coeur", "payoo"};
+        string couleur[5] = {"trefle", "carreau", "pic", "coeur", "payoo"};
         cout << "Carte : " << this->identifiant[0] << " de " << couleur[this->identifiant[1] - 1] << " avec " << this->points << " point(s) " << endl;
     }
 
