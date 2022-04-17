@@ -95,36 +95,39 @@ public:
 
 class Bot : public Joueur {
 private:
-    unsigned int nombreCartesCouleur[5] = {0,0,0,0,0};
-    unsigned int sommeCartesCouleur[5] = {0,0,0,0,0};
-    float valeurCartesCouleur[5] = {0,0,0,0,0};
-    int couleurDe = 0;
+    unsigned int nombreCartesCouleur[5] = {0,0,0,0,0}; //nombre de cartes par couleur
+    unsigned int sommeCartesCouleur[5] = {0,0,0,0,0}; //somme des valeurs des cartes par couleur
+    float valeurCartesCouleur[5] = {0,0,0,0,0}; //calcul pour savoir quelle couleur il faut éliminer en premier ou donner
+    int couleurDe = 0; //couleur du dé
 public:
     Bot(string nom) : Joueur(nom) {}
 
-    void setCouleurDe(int couleurDe){
+    void setCouleurDe(int couleurDe){ //définition de la couleur du dé
         this->couleurDe = couleurDe;
     };
 
-    void calculValeurCartes(){
-        for (int i=0;i<5;i++){
-            if (this->couleurDe==i+1){
-                this->valeurCartesCouleur[i] = this->sommeCartesCouleur[i]/ this->nombreCartesCouleur[i] * (float(this->nombreCartesCouleur[i]+2)/10);
-            } else {
-                this->valeurCartesCouleur[i] = round((this->sommeCartesCouleur[i]/ this->nombreCartesCouleur[i] * (float(this->nombreCartesCouleur[i])/10))*10)/10;
+    void calculValeurCartes(){ //calcul de la valeur d'une couleur
+        for (int i=0;i<5;i++){ //pour chaque couleur
+            if (this->couleurDe==i+1){ //couleur correspondante au dé
+                this->valeurCartesCouleur[i] = round(this->sommeCartesCouleur[i]/ this->nombreCartesCouleur[i] * (1+(float(this->nombreCartesCouleur[i]+2)/10))*10)/10; // =x/y*((1.x)+0.2) | x→ nombre de cartes d'une couleur    y→ somme des valeurs des cartes d'une couleur | arrondi au dixième près
+            } else if (this->couleurDe!=4) { //couleur ne correspondant pas au payoo
+                this->valeurCartesCouleur[i] = round((this->sommeCartesCouleur[i]/ this->nombreCartesCouleur[i] * (1+(float(this->nombreCartesCouleur[i])/10)))*10)/10; // =x/y*(1.x) | x→ nombre de cartes d'une couleur    y→ somme des valeurs des cartes d'une couleur |arrondi au dixième près
+            } else{ //couleur correspondante au payoo
+                this->valeurCartesCouleur[i] = round((this->sommeCartesCouleur[i]/ this->nombreCartesCouleur[i] * (1+(float(this->nombreCartesCouleur[i])/10)))*5)/10; // =(x/y*(1.x))/2 | x→ nombre de cartes d'une couleur    y→ somme des valeurs des cartes d'une couleur |arrondi au dixième près
+
             }
         }
     }
 
     virtual void recoisCartes(vector<Carte *> carteEnPlus) {
         unsigned int couleurCarte = 0;
-        this->cartes.insert(this->cartes.end(), carteEnPlus.begin(), carteEnPlus.end());
-        for (int i=0;i<carteEnPlus.size();i++){
-            couleurCarte=carteEnPlus[i]->getCouleur()-1;
-            this->nombreCartesCouleur[couleurCarte]+=1;
-            this->sommeCartesCouleur[couleurCarte]+=carteEnPlus[i]->getValeur();
+        this->cartes.insert(this->cartes.end(), carteEnPlus.begin(), carteEnPlus.end()); //insertion des cartes dans la liste des cartes du joueur
+        for (int i=0;i<carteEnPlus.size();i++){ //boucle pour chaque carte reçue par le joueur
+            couleurCarte=carteEnPlus[i]->getCouleur()-1; //couleur de la carte
+            this->nombreCartesCouleur[couleurCarte]+=1; //ajoute +1 aux nombres de carte de cette couleur
+            this->sommeCartesCouleur[couleurCarte]+=carteEnPlus[i]->getValeur(); //ajoute la valeur de cette carte à la somme de cette couleur
         }
-        this->calculValeurCartes();
+        this->calculValeurCartes(); //calcul score par couleur
     }
 
     virtual vector<Carte *> donneTroisCarte() {
@@ -165,7 +168,7 @@ public:
         return couleurPossible;
     }
 
-    virtual Carte *jouerUneCarte() {
+    virtual Carte *jouerUneCarte() { //TODO
         return this->cartes[rand() % this->cartes.size()];
     }
 };
