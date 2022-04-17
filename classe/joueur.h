@@ -18,7 +18,7 @@ public:
         }
     }
 
-    void recoisCartes(vector<Carte *> carteEnPlus) {
+    virtual void recoisCartes(vector<Carte *> carteEnPlus) {
         this->cartes.insert(this->cartes.end(), carteEnPlus.begin(), carteEnPlus.end());
     }
 
@@ -68,7 +68,7 @@ public:
         }
         return indexCartesDispo; //renvoi de la liste des index correspondant aux cartes que le joueur peut jouer
     }
-}
+};
 
 class Humain : public Joueur {
 public:
@@ -94,12 +94,75 @@ public:
 };
 
 class Bot : public Joueur {
+private:
+    unsigned int nombreCartesCouleur[5] = {0,0,0,0,0};
+    unsigned int sommeCartesCouleur[5] = {0,0,0,0,0};
+    float valeurCartesCouleur[5] = {0,0,0,0,0};
+    int couleurDe = 0;
 public:
     Bot(string nom) : Joueur(nom) {}
 
+    void setCouleurDe(int couleurDe){
+        this->couleurDe = couleurDe;
+    };
+
+    void calculValeurCartes(){
+        for (int i=0;i<5;i++){
+            if (this->couleurDe==i+1){
+                this->valeurCartesCouleur[i] = this->sommeCartesCouleur[i]/ this->nombreCartesCouleur[i] * (float(this->nombreCartesCouleur[i]+2)/10);
+            } else {
+                this->valeurCartesCouleur[i] = round((this->sommeCartesCouleur[i]/ this->nombreCartesCouleur[i] * (float(this->nombreCartesCouleur[i])/10))*10)/10;
+            }
+        }
+    }
+
+    virtual void recoisCartes(vector<Carte *> carteEnPlus) {
+        unsigned int couleurCarte = 0;
+        this->cartes.insert(this->cartes.end(), carteEnPlus.begin(), carteEnPlus.end());
+        for (int i=0;i<carteEnPlus.size();i++){
+            couleurCarte=carteEnPlus[i]->getCouleur()-1;
+            this->nombreCartesCouleur[couleurCarte]+=1;
+            this->sommeCartesCouleur[couleurCarte]+=carteEnPlus[i]->getValeur();
+        }
+        this->calculValeurCartes();
+    }
+
     virtual vector<Carte *> donneTroisCarte() {
-        shuffle(this->cartes.begin(), this->cartes.end(), default_random_engine(666));
-        return vector<Carte *>(this->cartes.begin(), this->cartes.begin() + 3);
+        vector<Carte*> carteDonne; //vector avec les cartes qui seront données
+        for (int i=0;i<3;i++){//boucle pour sélectionner 3 cartes
+            int couleurCarteDonne = 0; //couleur de la carte qui sera données
+            int carteIndexSelect = -1; //position de la carte dans la liste des cartes du joueur
+            vector<int> couleursPossible = this->couleursAvecLePlusDeValeurs(); //liste des couleurs avec le plus de valeurs
+            srand (time(NULL));
+            couleurCarteDonne = couleursPossible[rand() % couleursPossible.size()]; //choisis une couleur au hasard parmi la liste des couleurs possibles
+            for (int indexCarte = 0; indexCarte < this->cartes.size(); indexCarte++){
+                if (this->cartes[indexCarte]->getCouleur()==couleurCarteDonne and (carteIndexSelect== -1 or this->cartes[indexCarte]->getValeur()) > this->cartes[carteIndexSelect]->getValeur()){
+                    carteIndexSelect = indexCarte; //sélectionne la carte avec la plus grande valeur et de la même couleur que la couleur sélectionner
+                }
+            }
+            carteDonne.push_back(this->cartes[carteIndexSelect]); //ajoute la carte à la liste des cartes données
+            nombreCartesCouleur[couleurCarteDonne-1]-=1; //ajoute -1 au nombre de cartes de la couleur de la carte données
+            sommeCartesCouleur[couleurCarteDonne-1]-=this->cartes[carteIndexSelect]->getValeur(); //enlève la valeur de la carte donnée au nombre de points des cartes de la couleur de la carte données
+            this->cartes.erase(this->cartes.begin()+carteIndexSelect); //supprime la carte donnée de la liste des cartes du joueur
+            this->calculValeurCartes(); //recalcule la valeur des couleurs des cartes du joueur
+        }
+        return carteDonne;
+    }
+
+    vector<int> couleursAvecLePlusDeValeurs(){
+        float valeurCarteCouleurSelect = 0; //valeur de la plus grosse valeur
+        vector<int> couleurPossible; //liste des couleurs possible avec les plus grosses valeurs
+        for (int couleur=0;couleur<5;couleur++){ //récupère la plus grande valeur de couleurs dans le jeu du joueur
+            if (this->valeurCartesCouleur[couleur]>valeurCarteCouleurSelect){
+                valeurCarteCouleurSelect = this->valeurCartesCouleur[couleur];
+            }
+        }
+        for (int couleur=0;couleur<5;couleur++){ //ajoute toutes les couleurs qui ont la plus grande valeur de couleurs
+            if (this->valeurCartesCouleur[couleur]==valeurCarteCouleurSelect){
+                couleurPossible.push_back(couleur+1);
+            }
+        }
+        return couleurPossible;
     }
 
     virtual Carte *jouerUneCarte() {

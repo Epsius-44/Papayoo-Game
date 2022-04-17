@@ -3,11 +3,11 @@ private:
     vector<Joueur *> joueurs = {};
     Pli *pliActuel{};
     unsigned int symboleDe = 0;
-    Carte* cartes[60]{};
+    Carte *cartes[60]{};
     unsigned int joueurTour;
     unsigned int indexPapayoo = 0;
 public:
-    Jeu(unsigned int nombreJoueurs,unsigned int nombreJoueursHumains) {
+    Jeu(unsigned int nombreJoueurs, unsigned int nombreJoueursHumains) {
         unsigned int index = 0;
         for (unsigned int couleur = 1; couleur <= 4; couleur++) {
             for (unsigned int valeur = 1; valeur <= 10; ++valeur) {
@@ -26,17 +26,19 @@ public:
         for (unsigned int nbr = 0; nbr < nombreJoueursHumains; nbr++) {
             this->joueurs.push_back(new Humain("J" + to_string(nbr)));
         }
-        for (unsigned int nbr = 0; nbr < nombreJoueurs-nombreJoueursHumains; nbr++) {
+        for (unsigned int nbr = 0; nbr < nombreJoueurs - nombreJoueursHumains; nbr++) {
             this->joueurs.push_back(new Bot("Bot" + to_string(nbr)));
         }
     }
 
-    void melangerTableau(Carte* tableau[], int taille){ //fonction pour mélanger un tableau
+    void melangerTableau(Carte *tableau[], int taille) { //fonction pour mélanger un tableau
         srand(time(NULL));
         int indexAleatoire = -1;
-        Carte* valeurIndexAleatoire;
-        for (int index = 0; index < taille; index+=1){ //itération de chaque élément du tableau que l'on veut mélanger
-            indexAleatoire = rand()%taille; //sélection aléatoire d'un index du tableau avec qui on va échanger les valeurs avec l'élément de l'index auquel est rendu la boucle
+        Carte *valeurIndexAleatoire;
+        for (int index = 0;
+             index < taille; index += 1) { //itération de chaque élément du tableau que l'on veut mélanger
+            indexAleatoire = rand() %
+                             taille; //sélection aléatoire d'un index du tableau avec qui on va échanger les valeurs avec l'élément de l'index auquel est rendu la boucle
             valeurIndexAleatoire = tableau[indexAleatoire]; //enregistrement de la valeur situé à l'index choisi aléatoirement
             tableau[indexAleatoire] = tableau[index]; //modification de la valeur située à l'index choisi aléatoirement par la valeur située à l'index auquel est rendu la boucle
             tableau[index] = valeurIndexAleatoire; //modification de la valeur située à l'index auquel est rendu la boucle par l'ancienne valeur de l'index choisi aléatoirement
@@ -45,8 +47,7 @@ public:
 
     void melangereCarte() {
         unsigned int seed = 666;
-        //shuffle(this->cartes[0], this->cartes[59], default_random_engine(seed));
-        //this->melangerTableau(this->cartes, 60);
+        this->melangerTableau(this->cartes, 60);
     }
 
     void distribueCarte() {
@@ -92,7 +93,6 @@ public:
             index++;
         }
         this->indexPapayoo = index;
-
         this->cartes[this->indexPapayoo]->setPoint(40);
     }
 

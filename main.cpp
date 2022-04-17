@@ -1,6 +1,7 @@
 #include "iostream" // pour cin / cout
 #include "vector" // pour time()
-#include "stdlib.h"     /* srand, rand */
+#include "stdlib.h"     // srand, rand
+#include "cmath" //round
 #include "cassert"
 #include "algorithm"
 #include "random"
