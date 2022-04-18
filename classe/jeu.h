@@ -92,7 +92,7 @@ public:
         }
 
         for (unsigned int i = 0; i < this->joueurs.size(); i++) {
-            this->joueurs[i]->recoisCartes(troisCarteDonneeJoueurs[(i + 1) % this->joueurs.size()]);
+            this->joueurs[(i + 1) % this->joueurs.size()]->recoisCartes(troisCarteDonneeJoueurs[i]);
         }
         this->symboleDe = this->joueurs[(this->numManche-1)%this->joueurs.size()]->lancerDe();
         unsigned int index = 0;

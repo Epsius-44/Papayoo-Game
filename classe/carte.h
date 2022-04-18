@@ -36,7 +36,7 @@ public:
         } else if (this->getCouleur()==4){
             couleur = 12;
         }else{
-            couleur = 8;
+            couleur = 7;
         }
         if (jouable){
             couleurTerminal(0,couleur);
