@@ -43,6 +43,7 @@ public:
             this->sommeCartesCouleur[couleurCarte] += carteEnPlus[i]->getValeur(); //ajoute la valeur de cette carte à la somme de cette couleur
         }
         this->calculValeurCartes(); //calcul score par couleur
+        this->triCarte();
     }
 
     int indexCarteDefausser() {
@@ -62,13 +63,12 @@ public:
         return carteIndexSelect;
     }
 
-    void supprimerCarte(int indexCarte) {
+    virtual void supprimerCarte(int indexCarte) {
         this->nombreCartesCouleur[this->cartes[indexCarte]->getCouleur() -
                                   1] -= 1; //ajoute -1 au nombre de cartes de la couleur de la carte données
         this->sommeCartesCouleur[this->cartes[indexCarte]->getCouleur() -
                                  1] -= this->cartes[indexCarte]->getValeur(); //enlève la valeur de la carte donnée au nombre de points des cartes de la couleur de la carte données
-        this->cartes.erase(
-                this->cartes.begin() + indexCarte); //supprime la carte donnée de la liste des cartes du joueur
+        this->cartes.erase(this->cartes.begin() + indexCarte); //supprime la carte donnée de la liste des cartes du joueur
         this->calculValeurCartes(); //recalcule la valeur des couleurs des cartes du joueur
     }
 

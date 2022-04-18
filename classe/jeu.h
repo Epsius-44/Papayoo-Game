@@ -6,8 +6,12 @@ private:
     Carte *cartes[60]{};
     unsigned int joueurTour;
     unsigned int indexPapayoo = 0;
+    unsigned int numManche = 1;
+    unsigned int nombreManches = 0;
 public:
-    Jeu(unsigned int nombreJoueurs, unsigned int nombreJoueursHumains) {
+    Jeu() {
+        unsigned int nombreJoueursHumains = 0;
+        unsigned int nombreJoueurs = 0;
         unsigned int index = 0;
         for (unsigned int couleur = 1; couleur <= 4; couleur++) {
             for (unsigned int valeur = 1; valeur <= 10; ++valeur) {
@@ -20,8 +24,27 @@ public:
             index++;
         }
 
-        this->pliActuel = new Pli;
+        this->pliActuel = new Pli(this->joueurs);
         this->joueurTour = 0;
+
+        cout << "Nombres de joueurs (humains et bots): ";
+        while (!(cin >> nombreJoueurs) or nombreJoueurs<3 or nombreJoueurs>6){
+            cout << "Saisie incorrecte, saisissez une valeur entre 3 et 6: ";
+            cin.clear();
+            cin.ignore( numeric_limits<streamsize>::max(), '\n' );
+        }
+        cout << "Nombres de joueurs humains sur les " << nombreJoueurs << " joueurs: ";
+        while (!(cin >> nombreJoueursHumains) or nombreJoueursHumains<0 or nombreJoueursHumains>nombreJoueurs-1){
+            cout << "Saisie incorrecte, saisissez une valeur entre 0 et " << nombreJoueurs-1 << ": ";
+            cin.clear();
+            cin.ignore( numeric_limits<streamsize>::max(), '\n' );
+        }
+        cout << "Nombres de manches: ";
+        while (!(cin >> this->nombreManches) or this->nombreManches<1){
+            cout << "Saisie incorrecte, saisissez une valeur supérieur ou égal à 1: ";
+            cin.clear();
+            cin.ignore( numeric_limits<streamsize>::max(), '\n' );
+        }
 
         for (unsigned int nbr = 0; nbr < nombreJoueursHumains; nbr++) {
             this->joueurs.push_back(new Humain("J" + to_string(nbr)));
@@ -46,7 +69,6 @@ public:
     }
 
     void melangereCarte() {
-        unsigned int seed = 666;
         this->melangerTableau(this->cartes, 60);
     }
 
@@ -75,8 +97,8 @@ public:
     }
 
     void initialisationManche() {
+        affichageManche();
         distribueCarte();
-
         vector<vector<Carte *>> troisCarteDonneeJoueurs = {};
         for (unsigned int i = 0; i < this->joueurs.size(); i++) {
             troisCarteDonneeJoueurs.push_back(this->joueurs[i]->donneTroisCarte());
@@ -85,10 +107,8 @@ public:
         for (unsigned int i = 0; i < this->joueurs.size(); i++) {
             this->joueurs[i]->recoisCartes(troisCarteDonneeJoueurs[i + 1 % this->joueurs.size()]);
         }
-        this->symboleDe = this->joueurs[this->joueurTour]->lancerDe();
+        this->symboleDe = this->joueurs[(this->numManche-1)%this->joueurs.size()]->lancerDe();
         unsigned int index = 0;
-
-
         while (this->cartes[index]->getValeur() != 7 or this->cartes[index]->getCouleur() != this->symboleDe) {
             index++;
         }
@@ -97,22 +117,27 @@ public:
     }
 
     void manche() {
+        unsigned int joueurDebute = this->numManche%this->joueurs.size();
         this->initialisationManche();
-        cout << "test" << endl;
-
-        for (unsigned int pli = 0; pli < 60 / this->joueurs.size(); pli++) {
-            this->pliActuel->nouveauPli(this->joueurTour);
-
-            for (unsigned int numJoueurTour = 0; numJoueurTour < this->joueurs.size(); numJoueurTour++) {
-                unsigned int indexJoueur = (this->joueurTour + numJoueurTour) % this->joueurs.size();
-                this->pliActuel->ajouterCarteJouer(this->joueurs[indexJoueur]->jouerUneCarte(this->pliActuel->getCarteJoueur()));
-            }
-            this->joueurTour = this->pliActuel->trouveGagnantPli();
-            this->joueurs[this->joueurTour]->addPoints(this->pliActuel->calculPointPli());
+        for(int i=0; i<60/this->joueurs.size();i++){
+            this->pliActuel->nouveauPli(joueurDebute);
+            joueurDebute = this->pliActuel->commencerPli();
+            this->affichageScore();
         }
+    }
 
-        this->pliActuel->nouveauPli(this->joueurTour);
-        this->joueurTour = (this->joueurTour + 1) % this->joueurs.size();
-        this->cartes[this->indexPapayoo]->setPoint(0);
+    void affichageManche(){
+        cout << endl;
+        cout << "manche n° " << this->numManche << " / " << this->nombreManches << endl;
+    }
+
+    void affichageScore(){
+        cout << endl;
+        cout << "*****************************************" << endl;
+        cout << "scores: " << endl;
+        for (int j = 0; j<this->joueurs.size();j++){
+            cout << this->joueurs[j]->getNom() << ": " << this->joueurs[j]->getPoints()<<" points" << endl;
+        }
+        cout << "*****************************************" << endl;
     }
 };

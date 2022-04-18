@@ -25,6 +25,29 @@ public:
         cout << "Carte : " << this->identifiant[0] << " de " << couleur[this->identifiant[1] - 1] << " avec " << this->points << " point(s) " << endl;
     }
 
+    void afficherCarteCouleur(bool jouable = true){
+        int couleur = 0;
+        if (this->getCouleur()==0){
+            couleur = 2;
+        } else if (this->getCouleur()==1){
+            couleur = 14;
+        } else if (this->getCouleur()==2){
+            couleur = 9;
+        } else if (this->getCouleur()==3){
+            couleur = 12;
+        }else{
+            couleur = 8;
+        }
+        if (jouable){
+            couleurTerminal(0,couleur);
+        }else{
+            couleurTerminal(couleur,0);
+        }
+        cout << " " << this->getValeur() << " ";
+        resetCouleurTerminal();
+        cout << " ";
+    }
+
     void setPoint(unsigned int points){
         this->points = points;
     }

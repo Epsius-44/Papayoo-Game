@@ -5,20 +5,22 @@
 #include "cassert"
 #include "algorithm"
 #include "random"
+#include "windows.h"
 
 using namespace std;
 
+#include "classe/couleurConsole.h"
 #include "classe/carte.h"
-#include "classe/pli.h"
 #include "classe/joueur.h"
 #include "classe/humain.h"
 #include "classe/bot.h"
+#include "classe/pli.h"
 #include "classe/jeu.h"
 
 
 int main(int argc, char **argv)
 {
-    Jeu test(1,1);
+    Jeu test;
     test.manche();
     return 0;
 }

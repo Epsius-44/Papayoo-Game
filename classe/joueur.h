@@ -11,19 +11,45 @@ public:
         this->cartes = {};
     }
 
-    void afficherCartes() {
+    static bool tri(Carte* a, Carte* b) {
+        return (a->getValeur()+20*a->getCouleur()) < (b->getValeur()+20*b->getCouleur());
+    }
+
+
+    void afficherCartes(vector<int> *indexCartesJouable={}) {
+        int num = 1;
         for (int i = 0; i < this->cartes.size(); ++i) {
-            cout << i + 1 << " | ";
-            this->cartes[i]->afficherCarte();
+            if (indexCartesJouable->empty() or *find(indexCartesJouable->begin(), indexCartesJouable->end(),i)==i){
+                cout << num << ": ";
+                this->cartes[i]->afficherCarteCouleur(true);
+                num++;
+            }else{
+                this->cartes[i]->afficherCarteCouleur(false);
+            }
+            cout << "| ";
         }
     }
 
+    void triCarte(){
+        sort(this->cartes.begin(), this->cartes.end(),this->tri);
+    }
+
+
     virtual void recoisCartes(vector<Carte *> carteEnPlus) {
         this->cartes.insert(this->cartes.end(), carteEnPlus.begin(), carteEnPlus.end());
+        this->triCarte();
     }
 
     int unsigned lancerDe() {
-        return rand() % 4 + 1;
+        int couleurs[4] = {2,14,9,12};
+        int resultDe = rand() % 4 + 1;
+        cout << endl;
+        cout << this->getNom() << "à lancé le dé et le papayoo est : ";
+        couleurTerminal(0,couleurs[resultDe]);
+        cout << " 7 ";
+        resetCouleurTerminal();
+        cout << endl;
+        return resultDe;
     }
 
     virtual vector<Carte *> donneTroisCarte() {
@@ -52,20 +78,24 @@ public:
 
     void setCartes(vector<Carte *> cartes) {
         this->cartes = cartes;
+        this->triCarte();
+
+    }
+
+    virtual void suppimerCarte(int indexCarte){
+        this->cartes.erase(this->cartes.begin() + indexCarte); //supprime la carte donnée de la liste des cartes du joueur
     }
 
     vector<int> cartesDispo(unsigned int couleurCarteJouer = 0) {
         vector<int> indexCartesDispo = {}; //vector avec la liste des index des cartes qui peuvent être joué par le joueur (bot ou humain)
         for (int i = 0; i < this->cartes.size(); i++) { //boucle pour chaque carte présente dans le jeu du joueur
-            if (couleurCarteJouer == 0 or this->cartes[i]->getCouleur() ==
-                                          couleurCarteJouer) { //si aucune carte n'a été joué ou que la couleur de la carte correspond à la première carte joué pour le pli
+            if (couleurCarteJouer == 0 or this->cartes[i]->getCouleur() == couleurCarteJouer) { //si aucune carte n'a été joué ou que la couleur de la carte correspond à la première carte joué pour le pli
                 indexCartesDispo.push_back(i); //ajouter index de la carte à la liste des cartes disponibles
             }
         }
-        if (indexCartesDispo.size() ==
-            0) { //si le jeu du joueur ne contient aucune carte avec la même couleur que la première carte jouée pour le pli
+        if (indexCartesDispo.empty()) { //si le jeu du joueur ne contient aucune carte avec la même couleur que la première carte jouée pour le pli
             for (int i = 0; i < this->cartes.size(); i++) {
-                indexCartesDispo.push_back(i); //ajout de chaque carte du joueur dans la liste des cartes dispo
+                indexCartesDispo.push_back(i); //ajout de chaque carte du joueur dans la liste des cartes disponible
             }
         }
         return indexCartesDispo; //renvoi de la liste des index correspondant aux cartes que le joueur peut jouer

@@ -1,9 +1,13 @@
 class Pli {
 private:
-    unsigned int idJoueurDebute;
-    vector<Carte*> cartesJouer = {};
-
+    unsigned int idJoueurDebute{};
+    vector<Carte*> cartesJouer;
+    vector<Joueur *> joueurs;
 public:
+    Pli(vector<Joueur*> &listeJoueurs){
+        this->joueurs = listeJoueurs;
+    }
+
     void ajouterCarteJouer(Carte* carte) {
         this->cartesJouer.insert(this->cartesJouer.end(), carte);
     }
@@ -45,5 +49,33 @@ public:
     void nouveauPli(unsigned int idJoueurDebute) {
         this->cartesJouer.erase(this->cartesJouer.begin(), this->cartesJouer.end());
         this->setIdJoueurDebute(idJoueurDebute);
+    }
+    unsigned int commencerPli(){
+        unsigned int pointsPli=0;
+        unsigned int joueurGagnePli = 0;
+        for (int j = 0; j < this->joueurs.size(); j++){
+            this->affichageCartePli();
+            this->ajouterCarteJouer(this->joueurs[(this->getIdJoueurDebute()+j)%this->cartesJouer.size()]->jouerUneCarte(this->cartesJouer));
+        }
+        joueurGagnePli=this->trouveGagnantPli();
+        pointsPli=this->calculPointPli();
+        this->joueurs[joueurGagnePli]->addPoints(pointsPli);
+        this->affichageResultatPli();
+        return joueurGagnePli;
+    }
+
+    void affichageCartePli(){
+        for (int carte = 0; carte < this->cartesJouer.size(); carte++){
+            cout << endl;
+            cout << this->joueurs[(this->getIdJoueurDebute()+carte)%this->cartesJouer.size()]->getNom() << "à joué la carte ";
+            this->cartesJouer[carte]->afficherCarteCouleur();
+            cout << endl;
+        }
+    }
+    void affichageResultatPli(){
+        unsigned int joueurGagnePli=this->trouveGagnantPli();
+        cout << endl;
+        cout << endl;
+        cout << this->joueurs[joueurGagnePli]->getNom() << " remporte le pli et gagne " << this->calculPointPli() << " points" << endl;
     }
 };
