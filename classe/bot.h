@@ -5,8 +5,10 @@ private:
     float valeurCartesCouleur[5] = {0, 0, 0, 0,
                                     0}; //calcul pour savoir quelle couleur il faut éliminer en premier ou donner
     int couleurDe = 0; //couleur du dé
+
 public:
     Bot(string nom) : Joueur(nom) {}
+
 
     void setCouleurDe(int couleurDe) { //définition de la couleur du dé
         this->couleurDe = couleurDe;
@@ -110,17 +112,16 @@ public:
         return carteJouerJoueur; //retourne la carte jouer par le joueur
     }
 
-    int carteLaPlusProche(vector<int> indexCarte,
-                          unsigned int valeurCible) { //renvoie l'index de la carte la plus proche de la valeurCible et qui est en priorité inférieure sans qu'elle soit égale à la valeur cible
+    int carteLaPlusProche(vector<int> indexCarte, unsigned int valeurCible) { //renvoie l'index de la carte la plus proche de la valeurCible et qui est en priorité inférieure sans qu'elle soit égale à la valeur cible
         unsigned int valeurCarteSelect = this->cartes[indexCarte[0]]->getValeur(); //carte sélectionnée correspond à la première carte de la liste des cartes passée en paramètres de la fonction
         int indexCarteSelect = indexCarte[0];
         for (int i = 1; i <
                         indexCarte.size(); i++) { //pour chaque carte de la liste des cartes passée en paramètres de la fonction sauf la première carte
             unsigned int valeurCarte = this->cartes[indexCarte[i]]->getValeur(); //valeur de la carte
             if ((valeurCarte > valeurCible and valeurCarte < valeurCarteSelect) or
-                (valeurCarte < valeurCible and valeurCarte > valeurCarteSelect) or (valeurCarteSelect > valeurCible and
-                                                                                    valeurCarte <
-                                                                                    valeurCarteSelect)) { //vérifier si la valeur de la carte est supérieure à la valeur cible mais inférieure à la valeur de la carte déjà sélectionnée ou si la valeur de la carte est inférieure à la valeur cible mais supérieure à la valeur de la carte déjà sélectionnée
+                (valeurCarte < valeurCible and valeurCarte > valeurCarteSelect) or
+                (valeurCarteSelect > valeurCible and valeurCarte <
+                                                     valeurCarteSelect)) { //vérifier si la valeur de la carte est supérieure à la valeur cible mais inférieure à la valeur de la carte déjà sélectionnée ou si la valeur de la carte est inférieure à la valeur cible mais supérieure à la valeur de la carte déjà sélectionnée
                 valeurCarteSelect = valeurCarte;
                 indexCarteSelect = indexCarte[i];//sélection de la carte
             }
@@ -154,8 +155,7 @@ public:
                     }
                 }
             }
-            indexCarteJouer = this->carteLaPlusProche(cartePossibleJouer,
-                                                      valeurLaPlusHaute); //joue la carte qui a une valeur soit en dessous de la valeur la plus haute du pli soit qui à une valeur supérieure mais la plus proche possible de la carte la plus haute
+            indexCarteJouer = this->carteLaPlusProche(cartePossibleJouer, valeurLaPlusHaute); //joue la carte qui a une valeur soit en dessous de la valeur la plus haute du pli soit qui à une valeur supérieure mais la plus proche possible de la carte la plus haute
             if (couleurAJouer == this->couleurDe and this->cartes[indexCarteJouer]->getValeur() ==
                                                      7) { //évité que le joueur joue le papayoo si dans les cartes joué par les autres joueurs aucune est supérieur à 7
                 cartePossibleJouer.erase(cartePossibleJouer.begin() + indexCarteJouer);
@@ -173,6 +173,35 @@ public:
         }
     }
 
-    int jouerNouvelleCarte() { return 0; }//TODO
+    int jouerNouvelleCarte() {
+        vector<int> couleursPossibleJouer; //liste dex couleurs qui peuvent avec la valeur la plus faible
+        float valeurCouleurSelect = 0;
+        int couleurSelect = 0;
+        for (int couleurs = 0; couleurs < 5; couleurs++) { //pour chaque couleur
+            if (this->nombreCartesCouleur[couleurs] != 0 and
+                (valeurCouleurSelect == 0 or this->valeurCartesCouleur[couleurs] <
+                                             valeurCouleurSelect)) { //si la couleur contient des cartes et que la couleur a la valeur la plus faible
+                valeurCouleurSelect = this->valeurCartesCouleur[couleurs]; //attribuer la valeur la plus faible à valeurCouleurSelect
+            }
+        }
+        for (int couleurs = 0; couleurs < 5; couleurs++) { //pour chaque couleur
+            if (this->valeurCartesCouleur[couleurs] == valeurCouleurSelect) { //si la couleur à la valeur la plus faible
+                couleursPossibleJouer.push_back(
+                        couleurs + 1); //ajouter la couleur à la liste des couleurs qui va être joué
+            }
+        }
+        couleurSelect = couleursPossibleJouer[rand() %
+                                              couleursPossibleJouer.size()]; //sélection aléatoire d'une couleur
+
+        vector<int> indexCartesCouleurSelect; //liste des cartes du joueur dont la couleur correspond à celle de la couleur sélectionnée
+        for (int indexCarte = 0; indexCarte < this->cartes.size(); indexCarte++) { //pour chaque carte du joueur
+            if (this->cartes[indexCarte]->getCouleur() ==
+                couleurSelect) { //si la carte à la même couleur que celle sélectionnée
+                indexCartesCouleurSelect.push_back(indexCarte); //ajouté cette carte à la liste des cartes avec la couleur sélectionnée
+            }
+        }
+        return this->carteLaPlusProche(indexCartesCouleurSelect, round(this->valeurCartesCouleur[couleurSelect -
+                                                                                                 1])); //retourne l'index de la carte qui est le plus proche de la valeur de la couleur
+    }
 
 };
