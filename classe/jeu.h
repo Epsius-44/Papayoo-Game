@@ -68,12 +68,12 @@ public:
         }
     }
 
-    void melangereCarte() {
+    void melangerCarte() {
         this->melangerTableau(this->cartes, 60);
     }
 
     void distribueCarte() {
-        this->melangereCarte();
+        this->melangerCarte();
         for (unsigned int joueur = 0; joueur < this->joueurs.size(); joueur++) {
             vector<Carte *> cartesJoueur = {};
             for (int i = 0; i < 60 / this->joueurs.size(); ++i) {
@@ -92,7 +92,7 @@ public:
         }
 
         for (unsigned int i = 0; i < this->joueurs.size(); i++) {
-            this->joueurs[i]->recoisCartes(troisCarteDonneeJoueurs[i + 1 % this->joueurs.size()]);
+            this->joueurs[i]->recoisCartes(troisCarteDonneeJoueurs[(i + 1) % this->joueurs.size()]);
         }
         this->symboleDe = this->joueurs[(this->numManche-1)%this->joueurs.size()]->lancerDe();
         unsigned int index = 0;

@@ -11,8 +11,11 @@ public:
         }
         for (int i=1; i<=3; i++){
             carteSelect = this->selectionCarte(&carteSelectionnable, this->getNom()+" sélectionner 3 trois cartes à donner");
-            carteSelectJoueur.push_back(this->cartes[carteSelect-1]);
+            carteSelectJoueur.push_back(this->cartes[carteSelectionnable[carteSelect-1]]);
             carteSelectionnable.erase(carteSelectionnable.begin()+carteSelect-1);
+        }
+        for (int i=0;i<3;i++){
+            this->suppimerCarte(carteSelectJoueur[i]);
         }
         return carteSelectJoueur;
     }
@@ -24,11 +27,11 @@ public:
             couleurCarteJeu = carteJouer[0]->getCouleur();
         }
         vector<int> carteJouable = this->cartesDispo(couleurCarteJeu);
-        int indexCarteJouer = carteJouable[selectionCarte(&carteJouable)-1];
+        int indexCarteJouer = carteJouable[selectionCarte(&carteJouable,this->getNom()+" sélectionner la carte à jouer")-1];
         carteJoueurJouer = this->cartes[indexCarteJouer];
         cout << "Le joueur " << this->getNom() << " joue : ";
         carteJoueurJouer->afficherCarteCouleur();
-        this->suppimerCarte(indexCarteJouer);
+        this->suppimerCarteIndex(indexCarteJouer);
         return carteJoueurJouer;
     }
 

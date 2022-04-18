@@ -10,6 +10,7 @@ public:
 
     void ajouterCarteJouer(Carte* carte) {
         this->cartesJouer.insert(this->cartesJouer.end(), carte);
+        cout << "point: " << carte->getPoints() << endl;
     }
 
     unsigned int calculPointPli() {
@@ -57,7 +58,6 @@ public:
             this->affichageCartePli();
             this->ajouterCarteJouer(this->joueurs[(this->getIdJoueurDebute()+j)%this->joueurs.size()]->jouerUneCarte(this->cartesJouer));
         }
-        cout << this->joueurs.size() << endl;
         joueurGagnePli=this->trouveGagnantPli();
         pointsPli=this->calculPointPli();
         this->joueurs[joueurGagnePli]->addPoints(pointsPli);
@@ -68,9 +68,9 @@ public:
     void affichageCartePli(){
         for (int carte = 0; carte < this->cartesJouer.size(); carte++){
             cout << endl;
-            cout << this->joueurs[(this->getIdJoueurDebute()+carte)%this->joueurs.size()]->getNom() << "à joué la carte ";
+            cout << this->joueurs[(this->getIdJoueurDebute()+carte)%this->joueurs.size()]->getNom() << " à joué la carte ";
             this->cartesJouer[carte]->afficherCarteCouleur();
-            cout << endl;
+            cout << "\n";
         }
     }
     void affichageResultatPli(){

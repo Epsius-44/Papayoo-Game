@@ -54,7 +54,7 @@ public:
         int resultDe = rand() % 4 + 1;
         cout << endl;
         cout << this->getNom() << " à lancé le dé et le papayoo est : ";
-        couleurTerminal(0, couleurs[resultDe]);
+        couleurTerminal(0, couleurs[resultDe-1]);
         cout << " 7 ";
         resetCouleurTerminal();
         cout << endl;
@@ -91,9 +91,19 @@ public:
 
     }
 
-    virtual void suppimerCarte(int indexCarte) {
+    virtual void suppimerCarteIndex(int indexCarte) {
         this->cartes.erase(
                 this->cartes.begin() + indexCarte); //supprime la carte donnée de la liste des cartes du joueur
+    }
+
+    virtual void suppimerCarte(Carte* carte) {
+        int index = 0;
+        while (this->cartes[index]->getCouleur()!=carte->getCouleur() or this->cartes[index]->getValeur()!=carte->getValeur() or index==this->cartes.size()-1){
+            index++;
+        }
+        if (this->cartes[index]->getCouleur()==carte->getCouleur() and this->cartes[index]->getValeur()==carte->getValeur()){
+            this->suppimerCarteIndex(index);
+        }
     }
 
     vector<int> cartesDispo(unsigned int couleurCarteJouer = 0) {
