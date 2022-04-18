@@ -55,8 +55,8 @@ public:
                                              couleursPossible.size()]; //choisis une couleur au hasard parmi la liste des couleurs possibles
         for (int indexCarte = 0; indexCarte < this->cartes.size(); indexCarte++) {
             if (this->cartes[indexCarte]->getCouleur() == couleurCarteDonne and
-                (carteIndexSelect == -1 or this->cartes[indexCarte]->getValeur()) >
-                this->cartes[carteIndexSelect]->getValeur()) {
+                (carteIndexSelect == -1 or this->cartes[indexCarte]->getValeur() >
+                this->cartes[carteIndexSelect]->getValeur())) {
                 carteIndexSelect = indexCarte; //sélectionne la carte avec la plus grande valeur et de la même couleur que la couleur sélectionner
             }
         }
