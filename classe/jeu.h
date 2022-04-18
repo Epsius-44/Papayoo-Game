@@ -24,7 +24,6 @@ public:
             index++;
         }
 
-        this->pliActuel = new Pli(this->joueurs);
         this->joueurTour = 0;
 
         cout << "Nombres de joueurs (humains et bots): ";
@@ -52,6 +51,7 @@ public:
         for (unsigned int nbr = 0; nbr < nombreJoueurs - nombreJoueursHumains; nbr++) {
             this->joueurs.push_back(new Bot("Bot" + to_string(nbr)));
         }
+        this->pliActuel = new Pli(this->joueurs);
     }
 
     void melangerTableau(Carte *tableau[], int taille) { //fonction pour mélanger un tableau
@@ -83,19 +83,6 @@ public:
         }
     }
 
-    void nouveauPli(unsigned int idJoueurDebute) {
-        this->pliActuel->nouveauPli(idJoueurDebute);
-    }
-
-    void setSymboleDe(unsigned int de) {
-        assert(de < 1 or de > 4 && "La valeur du dé n'est pas valable, elle doit être situé entre 1 et 4");
-        this->symboleDe = de;
-    }
-
-    unsigned int getSybmboleDe() {
-        return this->symboleDe;
-    }
-
     void initialisationManche() {
         affichageManche();
         distribueCarte();
@@ -117,7 +104,7 @@ public:
     }
 
     void manche() {
-        unsigned int joueurDebute = this->numManche%this->joueurs.size();
+        unsigned int joueurDebute = (this->numManche-1)%this->joueurs.size();
         this->initialisationManche();
         for(int i=0; i<60/this->joueurs.size();i++){
             this->pliActuel->nouveauPli(joueurDebute);

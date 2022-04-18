@@ -53,7 +53,7 @@ public:
         int couleurs[4] = {2, 14, 9, 12};
         int resultDe = rand() % 4 + 1;
         cout << endl;
-        cout << this->getNom() << "à lancé le dé et le papayoo est : ";
+        cout << this->getNom() << " à lancé le dé et le papayoo est : ";
         couleurTerminal(0, couleurs[resultDe]);
         cout << " 7 ";
         resetCouleurTerminal();
