@@ -39,7 +39,7 @@ public:
         }
         int elementSelectJoueur;
         cout << endl;
-        this->afficherCartes(indexCartesJouable);
+        this->afficherCartes(*indexCartesJouable);
         cout << endl;
         cout << message << " (entre 1 et " << nbrElementSelect << "): ";
         while (!(cin >> elementSelectJoueur) or elementSelectJoueur<1 or elementSelectJoueur>indexCartesJouable->size()){

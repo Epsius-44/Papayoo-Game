@@ -11,27 +11,36 @@ public:
         this->cartes = {};
     }
 
-    static bool tri(Carte* a, Carte* b) {
-        return (a->getValeur()+20*a->getCouleur()) < (b->getValeur()+20*b->getCouleur());
+    static bool tri(Carte *a, Carte *b) {
+        return (a->getValeur() + 20 * a->getCouleur()) < (b->getValeur() + 20 * b->getCouleur());
     }
 
 
-    void afficherCartes(vector<int> *indexCartesJouable={}) {
-        int num = 1;
+    void afficherCartes(vector<int> indexCartesJouable = {}) {
+        int num = 0;
         for (int i = 0; i < this->cartes.size(); ++i) {
-            if (indexCartesJouable->empty() or *find(indexCartesJouable->begin(), indexCartesJouable->end(),i)==i){
-                cout << num << ": ";
-                this->cartes[i]->afficherCarteCouleur(true);
+            bool present = false;
+            if (indexCartesJouable.empty()) {
+                present = true;
                 num++;
-            }else{
-                this->cartes[i]->afficherCarteCouleur(false);
+                cout << num << ": ";
+            } else {
+                for (int h = 0; h < indexCartesJouable.size(); ++h) {
+                    if (i == indexCartesJouable[h]) {
+                        present = true;
+                        num++;
+                        cout << num << ": ";
+                    }
+                }
             }
+
+            this->cartes[i]->afficherCarteCouleur(present);
             cout << "| ";
         }
     }
 
-    void triCarte(){
-        sort(this->cartes.begin(), this->cartes.end(),this->tri);
+    void triCarte() {
+        sort(this->cartes.begin(), this->cartes.end(), this->tri);
     }
 
 
@@ -41,11 +50,11 @@ public:
     }
 
     int unsigned lancerDe() {
-        int couleurs[4] = {2,14,9,12};
+        int couleurs[4] = {2, 14, 9, 12};
         int resultDe = rand() % 4 + 1;
         cout << endl;
         cout << this->getNom() << "à lancé le dé et le papayoo est : ";
-        couleurTerminal(0,couleurs[resultDe]);
+        couleurTerminal(0, couleurs[resultDe]);
         cout << " 7 ";
         resetCouleurTerminal();
         cout << endl;
@@ -82,14 +91,16 @@ public:
 
     }
 
-    virtual void suppimerCarte(int indexCarte){
-        this->cartes.erase(this->cartes.begin() + indexCarte); //supprime la carte donnée de la liste des cartes du joueur
+    virtual void suppimerCarte(int indexCarte) {
+        this->cartes.erase(
+                this->cartes.begin() + indexCarte); //supprime la carte donnée de la liste des cartes du joueur
     }
 
     vector<int> cartesDispo(unsigned int couleurCarteJouer = 0) {
         vector<int> indexCartesDispo = {}; //vector avec la liste des index des cartes qui peuvent être joué par le joueur (bot ou humain)
         for (int i = 0; i < this->cartes.size(); i++) { //boucle pour chaque carte présente dans le jeu du joueur
-            if (couleurCarteJouer == 0 or this->cartes[i]->getCouleur() == couleurCarteJouer) { //si aucune carte n'a été joué ou que la couleur de la carte correspond à la première carte joué pour le pli
+            if (couleurCarteJouer == 0 or this->cartes[i]->getCouleur() ==
+                                          couleurCarteJouer) { //si aucune carte n'a été joué ou que la couleur de la carte correspond à la première carte joué pour le pli
                 indexCartesDispo.push_back(i); //ajouter index de la carte à la liste des cartes disponibles
             }
         }

@@ -34,8 +34,8 @@ public:
             cin.ignore( numeric_limits<streamsize>::max(), '\n' );
         }
         cout << "Nombres de joueurs humains sur les " << nombreJoueurs << " joueurs: ";
-        while (!(cin >> nombreJoueursHumains) or nombreJoueursHumains<0 or nombreJoueursHumains>nombreJoueurs-1){
-            cout << "Saisie incorrecte, saisissez une valeur entre 0 et " << nombreJoueurs-1 << ": ";
+        while (!(cin >> nombreJoueursHumains) or nombreJoueursHumains<0 or nombreJoueursHumains>nombreJoueurs){
+            cout << "Saisie incorrecte, saisissez une valeur entre 1 et " << nombreJoueurs << ": ";
             cin.clear();
             cin.ignore( numeric_limits<streamsize>::max(), '\n' );
         }
