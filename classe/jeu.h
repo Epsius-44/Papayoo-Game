@@ -105,7 +105,7 @@ public:
 
             for (unsigned int numJoueurTour = 0; numJoueurTour < this->joueurs.size(); numJoueurTour++) {
                 unsigned int indexJoueur = (this->joueurTour + numJoueurTour) % this->joueurs.size();
-                this->pliActuel->ajouterCarteJouer(this->joueurs[indexJoueur]->jouerUneCarte());
+                this->pliActuel->ajouterCarteJouer(this->joueurs[indexJoueur]->jouerUneCarte(this->pliActuel->getCarteJoueur()));
             }
             this->joueurTour = this->pliActuel->trouveGagnantPli();
             this->joueurs[this->joueurTour]->addPoints(this->pliActuel->calculPointPli());
