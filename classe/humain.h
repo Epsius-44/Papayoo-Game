@@ -41,9 +41,9 @@ public:
             nbrElementSelect = indexCartesJouable->size();
         }
         int elementSelectJoueur;
-        cout << endl;
+        cout << "\n";
         this->afficherCartes(*indexCartesJouable);
-        cout << endl;
+        cout << "\n";
         cout << message << " (entre 1 et " << nbrElementSelect << "): ";
         while (!(cin >> elementSelectJoueur) or elementSelectJoueur<1 or elementSelectJoueur>indexCartesJouable->size()){
             cout << "Saisie incorrecte, recommencez: ";

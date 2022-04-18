@@ -104,13 +104,25 @@ public:
     }
 
     void manche() {
-        unsigned int joueurDebute = (this->numManche-1)%this->joueurs.size();
-        this->initialisationManche();
-        for(int i=0; i<60/this->joueurs.size();i++){
-            this->pliActuel->nouveauPli(joueurDebute);
-            joueurDebute = this->pliActuel->commencerPli();
-            this->affichageScore();
+        string vide;
+        for (int mancheRecommence=0; mancheRecommence<this->nombreManches;mancheRecommence++) {
+            unsigned int joueurDebute = (this->numManche - 1) % this->joueurs.size();
+            this->initialisationManche();
+            for (int i = 0; i < 60 / this->joueurs.size(); i++) {
+                this->pliActuel->nouveauPli(joueurDebute);
+                joueurDebute = this->pliActuel->commencerPli();
+                this->affichageScore();
+            }
+            if (mancheRecommence+1!=nombreManches){
+            cout << "\n appuyer sur entrée pour lancer la prochaine manche";
+            cin >> vide;
+            }
         }
+        clearTerminal();
+        cout << "\n score finale: \n";
+        this->affichageScore();
+        cout << "\n appuyer sur entrée pour quitter le jeu";
+        cin >> vide;
     }
 
     void affichageManche(){
