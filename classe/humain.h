@@ -19,7 +19,7 @@ public:
             carteSelectionnable.erase(carteSelectionnable.begin()+carteSelect-1); //supprime l'index de la carte de la liste des cartes qui ne sont pas données → n'est plus sélectionnable par le joueur
         }
         for (int i=0;i<3;i++){ //répéter 3 fois
-            this->suppimerCarte(carteSelectJoueur[i]); //supprimer la carte du jeu du joueur → boucle à part afin que la carte s'affiche dans la liste des cartes du joueur lorsqu'il sélectionne les cartes à données bien qu'elle ne soit plus sélectionnable
+            this->supprimerCarte(carteSelectJoueur[i]); //supprimer la carte du jeu du joueur → boucle à part afin que la carte s'affiche dans la liste des cartes du joueur lorsqu'il sélectionne les cartes à données bien qu'elle ne soit plus sélectionnable
         }
         return carteSelectJoueur; //retourne la liste des cartes supprimées
     }
@@ -33,7 +33,7 @@ public:
         vector<int> carteJouable = this->cartesDispo(couleurCarteJeu); //liste des index des cartes que le joueur peut jouer
         int indexCarteJouer = carteJouable[selectionCarte(&carteJouable,this->getNom()+" sélectionner la carte à jouer")-1]; //sélection de la carte jouer
         carteJoueurJouer = this->cartes[indexCarteJouer]; //carte jouer par le joueur
-        this->suppimerCarteIndex(indexCarteJouer); //supprimer la carte jouer des cartes du joueur à partir de l'index de celle-ci
+        this->supprimerCarteIndex(indexCarteJouer); //supprimer la carte jouer des cartes du joueur à partir de l'index de celle-ci
         return carteJoueurJouer; //retourne la carte jouée
     }
 
