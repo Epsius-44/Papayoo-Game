@@ -104,7 +104,7 @@ public:
         this->cartes[this->indexPapayoo]->setPoint(40);
     }
 
-    void manche() {
+    void jouer() {
         string vide;
         for (int mancheRecommence=0; mancheRecommence<this->nombreManches;mancheRecommence++) {
             unsigned int joueurDebute = (this->numManche - 1) % this->joueurs.size();

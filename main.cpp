@@ -4,8 +4,8 @@
 #include "cmath" //round
 #include "cassert"
 #include "algorithm"
-#include "random"
-#include "windows.h"
+#include "random" //aléatoire
+#include "windows.h" //couleur du terminal
 
 using namespace std;
 
@@ -20,7 +20,7 @@ using namespace std;
 
 int main(int argc, char **argv)
 {
-    Jeu test;
-    test.manche();
+    Jeu partie;
+    partie.jouer(); //lancer une partie
     return 0;
 }
