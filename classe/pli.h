@@ -10,6 +10,14 @@ public:
         this->terminal=terminal;
     }
 
+    unsigned int getIdJoueurDebute() { //index du joueur qui commence dans la liste des joueurs
+        return this->idJoueurDebute;
+    }
+
+    void setIdJoueurDebute(unsigned int id) { //modifie le numéro du joueur qui commence
+        this->idJoueurDebute = id;
+    }
+
     void ajouterCarteJouer(Carte* carte) { //ajoute une carte à la liste des cartes jouées pendant le pli et la met en dernière position
         this->cartesJouer.insert(this->cartesJouer.end(), carte);
     }
@@ -36,30 +44,9 @@ public:
         return idJoueurGagnant%nombreJoueur; //remet le numéro du joueur par rapport aux nombres de joueurs total (ex: si idJoueurGagnant = 5 | nombreJoueur = 4 → retourne 5%4=1)
     }
 
-    unsigned int getIdJoueurDebute() { //index du joueur qui commence dans la liste des joueurs
-        return this->idJoueurDebute;
-    }
-
-    void setIdJoueurDebute(unsigned int id) { //modifie le numéro du joueur qui commence
-        this->idJoueurDebute = id;
-    }
-
-    vector<Carte *> getCarteJoueur() { //retourne la liste des cartes jouer
-        return this->cartesJouer;
-    }
-
     void nouveauPli(unsigned int idJoueurDebute) { //initialisation d'un nouveau pli
         this->cartesJouer.erase(this->cartesJouer.begin(), this->cartesJouer.end()); //supprime les cartes jouer précédemment
         this->setIdJoueurDebute(idJoueurDebute); //modifie le numéro de l'index du joueur qui commence
-    }
-
-    void affichagePapayoo(unsigned int papayoo){ //affiche la carte sélectionnée en tant que papayoo
-            int couleurs[4] = {2, 14, 9, 12}; //liste des couleurs dans le terminal par rapport à la couleur des cartes
-            cout << "\nle papayoo est: ";
-            this->terminal->carteCouleurTerminal(papayoo);//change la couleur de ce qui va être affiché dans le terminal par la couleur de la carte du papayoo
-            cout << " 7 "; //affiche le 7 désigné comme le papayoo
-        this->terminal->resetCouleurTerminal(); //remet à 0 la couleur de ce qui va être affiché dans le terminal
-            cout << "\n"; //reviens à la ligne
     }
 
     unsigned int commencerPli(unsigned int papayoo, unsigned int indexJoueurDebute){ //commencer un pli
@@ -79,6 +66,15 @@ public:
         this->joueurs[joueurGagnePli]->addPoints(pointsPli); //ajouter les points gagnés au joueur qui a gagné le pli
         this->affichageResultatPli(); //afficher le gagnant et le nombre de points gagné dans le pli
         return joueurGagnePli; //retourner le numéro de l'index du gagnant dans la liste des joueurs
+    }
+
+    void affichagePapayoo(unsigned int papayoo){ //affiche la carte sélectionnée en tant que papayoo
+        int couleurs[4] = {2, 14, 9, 12}; //liste des couleurs dans le terminal par rapport à la couleur des cartes
+        cout << "\nle papayoo est: ";
+        this->terminal->carteCouleurTerminal(papayoo);//change la couleur de ce qui va être affiché dans le terminal par la couleur de la carte du papayoo
+        cout << " 7 "; //affiche le 7 désigné comme le papayoo
+        this->terminal->resetCouleurTerminal(); //remet à 0 la couleur de ce qui va être affiché dans le terminal
+        cout << "\n"; //reviens à la ligne
     }
 
     void affichageCartePli(){//afficher les cartes jouées dans le pli

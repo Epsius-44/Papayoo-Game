@@ -1,6 +1,7 @@
 class Joueur {
 private:
     string nom; //nom du joueur
+    unsigned int couleurDe = 0; //couleur du dé
 protected:
     int unsigned points; //nombre de points du joueur
     vector<Carte *> cartes; //liste des cartes du joueur
@@ -11,10 +12,51 @@ public:
         this->cartes = {};
     }
 
+    void addPoints(int unsigned points) { //ajouter des points au joueur
+        this->points += points;
+    }
+
+    void setCouleurDe(unsigned int couleurDe) { //définition de la couleur du dé
+        this->couleurDe = couleurDe;
+    }
+
+    string getNom() {//retourner le nom du joueur
+        return this->nom;
+    }
+
+    unsigned int getCouleurDe() { //retourne la couleur du dé
+        return this->couleurDe;
+    }
+
+    int unsigned getPoints() {//retourner le nombre de points du joueur
+        return this->points;
+    }
+
+    vector<Carte *> getCartes() {//retourner la liste des cartes du joueur
+        return this->cartes;
+    }
+
+    virtual void supprimerCarteIndex(int indexCarte) { //supprimer une carte de la liste des cartes du joueur à partir de son index dans celle-ci
+        this->cartes.erase(this->cartes.begin() + indexCarte); //supprime la carte donnée de la liste des cartes du joueur
+    }
+
+    virtual void supprimerCarte(Carte* carte) { //supprimer une carte de la liste des cartes du joueur à partir de la couleur et de la valeur de la carte
+        int index = 0; //index dans la liste des cartes du joueur de la carte à supprimer
+        while (index!=this->cartes.size() and (this->cartes[index]->getCouleur()!=carte->getCouleur() or this->cartes[index]->getValeur()!=carte->getValeur())){ //tant que la carte correspondant à l'index dans la liste des cartes du joueur ne correspond pas à la carte qu'on veut supprimer ou qu'on dépasse la dernière carte de la liste des cartes du joueur
+            index++; //ajouter 1 à index
+        }
+        if (index!=this->cartes.size()){ //si index ne correspond pas à la taille de la liste des cartes du joueur alors la carte peut être supprimer
+            this->supprimerCarteIndex(index); //supprimer la carte grace à l'index obtenu
+        }
+    }
+
     static bool tri(Carte *a, Carte *b) { //fonction utiliser pour trier les cartes du joueur par couler et par valeur
         return (a->getValeur() + 20 * a->getCouleur()) < (b->getValeur() + 20 * b->getCouleur());
     }
 
+    void triCarte() {//trier les cartes du joueur en fonction de la couleur et de la valeur des cartes
+        sort(this->cartes.begin(), this->cartes.end(), this->tri);
+    }
 
     void afficherCartes(vector<int> indexCartesJouable = {}) { //afficher les cartes du joueur, prend en paramètre une liste d'index de cartes qui peuvent être sélectionnables
         int num = 0;//numéro pour sélectionner la carte sélectionnable
@@ -38,11 +80,6 @@ public:
         }
     }
 
-    void triCarte() {//trier les cartes du joueur en fonction de la couleur et de la valeur des cartes
-        sort(this->cartes.begin(), this->cartes.end(), this->tri);
-    }
-
-
     virtual void recoisCartes(vector<Carte *> carteEnPlus) {//ajoute des cartes au jeu du joueur
         this->cartes.insert(this->cartes.end(), carteEnPlus.begin(), carteEnPlus.end());//ajouter les cartes à la liste des cartes du joueur
         this->triCarte();//trier les cartes
@@ -60,36 +97,6 @@ public:
     virtual Carte *jouerUneCarte(vector<Carte *> carteJouer) {//jouer une carte
         return nullptr;
     };
-
-    string getNom() {//retourner le nom du joueur
-        return this->nom;
-    }
-
-    int unsigned getPoints() {//retourner le nombre de points du joueur
-        return this->points;
-    }
-
-    void addPoints(int unsigned points) { //ajouter des points au joueur
-        this->points += points;
-    }
-
-    vector<Carte *> getCartes() {//retourner la liste des cartes du joueur
-        return this->cartes;
-    }
-
-    virtual void suppimerCarteIndex(int indexCarte) { //supprimer une carte de la liste des cartes du joueur à partir de son index dans celle-ci
-        this->cartes.erase(this->cartes.begin() + indexCarte); //supprime la carte donnée de la liste des cartes du joueur
-    }
-
-    virtual void suppimerCarte(Carte* carte) { //supprimer une carte de la liste des cartes du joueur à partir de la couleur et de la valeur de la carte
-        int index = 0; //index dans la liste des cartes du joueur de la carte à supprimer
-        while (index!=this->cartes.size() and (this->cartes[index]->getCouleur()!=carte->getCouleur() or this->cartes[index]->getValeur()!=carte->getValeur())){ //tant que la carte correspondant à l'index dans la liste des cartes du joueur ne correspond pas à la carte qu'on veut supprimer ou qu'on dépasse la dernière carte de la liste des cartes du joueur
-            index++; //ajouter 1 à index
-        }
-        if (index!=this->cartes.size()){ //si index ne correspond pas à la taille de la liste des cartes du joueur alors la carte peut être supprimer
-            this->suppimerCarteIndex(index); //supprimer la carte grace à l'index obtenu
-        }
-    }
 
     vector<int> cartesDispo(unsigned int couleurCarteJouer = 0) {
         vector<int> indexCartesDispo = {}; //vector avec la liste des index des cartes qui peuvent être joué par le joueur (bot ou humain)

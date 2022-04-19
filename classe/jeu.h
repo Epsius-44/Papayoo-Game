@@ -89,23 +89,32 @@ public:
 
     // Methode qui initialise la manche
     void initialisationManche() {
-        affichageManche(); // Appel la methode affichageManche
-        distribueCarte(); // Distribue les cartes avec la methode
+        this->affichageManche(); // Appel la methode affichageManche
+        this->distribueCarte(); // Distribue les cartes avec la methode
         vector<vector<Carte *>> troisCarteDonneeJoueurs = {}; // Initialise le vecteur des cartes échanger
         for (unsigned int i = 0; i < this->joueurs.size(); i++) { // Pour chaque joueur
             troisCarteDonneeJoueurs.push_back(this->joueurs[i]->donneTroisCarte()); // Appel la methode pour donner trois cartes du joueur
         }
 
         for (unsigned int i = 0; i < this->joueurs.size(); i++) { // Pour chque joueur
-            this->joueurs[(i + 1) % this->joueurs.size()]->recoisCartes(troisCarteDonneeJoueurs[i]); // Appel la methode pour recevoir les cartes donner par le joueur précédant
+            this->joueurs[(i + 1) %
+                          this->joueurs.size()]->recoisCartes(troisCarteDonneeJoueurs[i]); // Appel la methode pour recevoir les cartes donner par le joueur précédant
         }
-        this->symboleDe = this->joueurs[(this->numManche-1)%this->joueurs.size()]->lancerDe(); // Appel la fonction lancerDe du premier joueur de la manche et le stock
+        this->initialisationPapayoo();
+    }
+
+    void initialisationPapayoo(){
+        this->symboleDe = this->joueurs[(this->numManche - 1) % this->joueurs.size()]->lancerDe(); // Appel la fonction lancerDe du premier joueur de la manche et le stock
         unsigned int index = 0; // Index itérer pour avoir l'index de la carte Papayoo
         while (this->cartes[index]->getValeur() != 7 or this->cartes[index]->getCouleur() != this->symboleDe) { // Tant que la carte est différente de 7 et d'une autre couleur que le dé
             index++; // Incrémenter l'index
         }
         this->indexPapayoo = index; // Stock l'index de la carte Papayoo
         this->cartes[this->indexPapayoo]->setPoint(40); // Change le nombre de point du Papayoo
+
+        for (int joueur=0;joueur<this->joueurs.size();joueur++){
+            this->joueurs[joueur]->setCouleurDe(this->symboleDe);
+        }
     }
 
     // Methode pour joueur (regroupe toutes les manches)
