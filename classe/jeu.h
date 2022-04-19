@@ -131,7 +131,7 @@ public:
         }
         this->terminal->clearTerminal(); // Efface la console avec une methode du terminal
         cout << "\n score finale: \n";
-        this->affichageScore(); // Affiche le score finale
+        this->affichageScoreFinaux(); // Affiche le score finale
         this->terminal->attendre(); // Attendre pour laisser l'affichage des scores visibles
     }
 
@@ -147,5 +147,27 @@ public:
             cout << this->joueurs[j]->getNom() << ": " << this->joueurs[j]->getPoints()<<" points\n";
         }
         cout << "*****************************************\n";
+    }
+
+
+    void affichageScoreFinaux(){ //afficher les scores finaux dans l'ordre du podium
+        vector<Joueur*> joueurOrdre; //liste des joueurs dans l'ordre du podium
+        vector<Joueur*> listeJoueur = this->joueurs; //liste des joueurs non triés dans l'ordre du podium
+        for (int nbrJoueur=0;nbrJoueur<this->joueurs.size();nbrJoueur++){ //pour chaque joueur
+            int index = 0; //index du joueur avec le moins de score dans listeJoueur
+            for (int j =0;j<listeJoueur.size();j++){ //pour chaque joueur non trié
+                if (listeJoueur[j]->getPoints()<listeJoueur[index]->getPoints()){ //récupérer le joueur avec le moins de points de la liste listeJoueur
+                    index = j;
+                }
+            }
+            joueurOrdre.push_back(listeJoueur[index]);//ajouter ce joueur à la fin de la liste des joueurs triés dans l'ordre du podium
+            listeJoueur.erase(listeJoueur.begin()+index); //supprimer ce joueur de la liste des joueurs non triés
+        }
+        cout << "\n*****************************************\n";
+        for (int position = 0; position<this->joueurs.size();position++){ // Pour chaque joueur
+            cout << position+1 << "- " << joueurOrdre[position]->getNom() << ": " << joueurOrdre[position]->getPoints()<<" points\n"; //afficher la position, le nom et le score du joueur
+        }
+        cout << "*****************************************\n";
+
     }
 };
