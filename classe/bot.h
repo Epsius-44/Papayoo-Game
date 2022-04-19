@@ -16,19 +16,23 @@ public:
 
     void calculValeurCartes() { //calcul de la valeur d'une couleur
         for (int i = 0; i < 5; i++) { //pour chaque couleur
-            if (this->couleurDe == i + 1) { //couleur correspondante au dé
-                this->valeurCartesCouleur[i] = round(this->sommeCartesCouleur[i] / this->nombreCartesCouleur[i] *
-                                                     (1 + (float(this->nombreCartesCouleur[i] + 2) / 10)) * 10) /
-                                               10; // =x/y*((1.x)+0.2) | x→ nombre de cartes d'une couleur    y→ somme des valeurs des cartes d'une couleur | arrondi au dixième près
-            } else if (this->couleurDe != 4) { //couleur ne correspondant pas au payoo
-                this->valeurCartesCouleur[i] = round((this->sommeCartesCouleur[i] / this->nombreCartesCouleur[i] *
-                                                      (1 + (float(this->nombreCartesCouleur[i]) / 10))) * 10) /
-                                               10; // =x/y*(1.x) | x→ nombre de cartes d'une couleur    y→ somme des valeurs des cartes d'une couleur |arrondi au dixième près
-            } else { //couleur correspondante au payoo
-                this->valeurCartesCouleur[i] = round((this->sommeCartesCouleur[i] / this->nombreCartesCouleur[i] *
-                                                      (1 + (float(this->nombreCartesCouleur[i]) / 10))) * 5) /
-                                               10; // =(x/y*(1.x))/2 | x→ nombre de cartes d'une couleur    y→ somme des valeurs des cartes d'une couleur |arrondi au dixième près
+            if (this->nombreCartesCouleur[i]!=0) {
+                if (this->couleurDe == i + 1) { //couleur correspondante au dé
+                    this->valeurCartesCouleur[i] = round(this->sommeCartesCouleur[i] / this->nombreCartesCouleur[i] *
+                                                         (1 + (float(this->nombreCartesCouleur[i] + 2) / 10)) * 10) /
+                                                   10; // =x/y*((1.x)+0.2) | x→ nombre de cartes d'une couleur    y→ somme des valeurs des cartes d'une couleur | arrondi au dixième près
+                } else if (this->couleurDe != 4) { //couleur ne correspondant pas au payoo
+                    this->valeurCartesCouleur[i] = round((this->sommeCartesCouleur[i] / this->nombreCartesCouleur[i] *
+                                                          (1 + (float(this->nombreCartesCouleur[i]) / 10))) * 10) /
+                                                   10; // =x/y*(1.x) | x→ nombre de cartes d'une couleur    y→ somme des valeurs des cartes d'une couleur |arrondi au dixième près
+                } else { //couleur correspondante au payoo
+                    this->valeurCartesCouleur[i] = round((this->sommeCartesCouleur[i] / this->nombreCartesCouleur[i] *
+                                                          (1 + (float(this->nombreCartesCouleur[i]) / 10))) * 5) /
+                                                   10; // =(x/y*(1.x))/2 | x→ nombre de cartes d'une couleur    y→ somme des valeurs des cartes d'une couleur |arrondi au dixième près
 
+                }
+            }else{
+                this->valeurCartesCouleur[i]=0;
             }
         }
     }
@@ -190,8 +194,7 @@ public:
                         couleurs + 1); //ajouter la couleur à la liste des couleurs qui va être joué
             }
         }
-        couleurSelect = couleursPossibleJouer[rand() %
-                                              couleursPossibleJouer.size()]; //sélection aléatoire d'une couleur
+        couleurSelect = couleursPossibleJouer[rand() % couleursPossibleJouer.size()]; //sélection aléatoire d'une couleur
 
         vector<int> indexCartesCouleurSelect; //liste des cartes du joueur dont la couleur correspond à celle de la couleur sélectionnée
         for (int indexCarte = 0; indexCarte < this->cartes.size(); indexCarte++) { //pour chaque carte du joueur
@@ -200,8 +203,7 @@ public:
                 indexCartesCouleurSelect.push_back(indexCarte); //ajouté cette carte à la liste des cartes avec la couleur sélectionnée
             }
         }
-        return this->carteLaPlusProche(indexCartesCouleurSelect, round(this->valeurCartesCouleur[couleurSelect -
-                                                                                                 1])); //retourne l'index de la carte qui est le plus proche de la valeur de la couleur
+        return this->carteLaPlusProche(indexCartesCouleurSelect, round(this->valeurCartesCouleur[couleurSelect -1])); //retourne l'index de la carte qui est le plus proche de la valeur de la couleur
     }
 
 };

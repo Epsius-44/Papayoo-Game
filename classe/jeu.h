@@ -112,6 +112,7 @@ public:
                 this->pliActuel->nouveauPli(joueurDebute);
                 joueurDebute = this->pliActuel->commencerPli();
                 this->affichageScore();
+                this->numManche++;
             }
             if (mancheRecommence+1!=nombreManches){
             cout << "\n appuyer sur entrée pour lancer la prochaine manche";

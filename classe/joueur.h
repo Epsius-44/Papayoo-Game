@@ -108,8 +108,7 @@ public:
     vector<int> cartesDispo(unsigned int couleurCarteJouer = 0) {
         vector<int> indexCartesDispo = {}; //vector avec la liste des index des cartes qui peuvent être joué par le joueur (bot ou humain)
         for (int i = 0; i < this->cartes.size(); i++) { //boucle pour chaque carte présente dans le jeu du joueur
-            if (couleurCarteJouer == 0 or this->cartes[i]->getCouleur() ==
-                                          couleurCarteJouer) { //si aucune carte n'a été joué ou que la couleur de la carte correspond à la première carte joué pour le pli
+            if (couleurCarteJouer == 0 or this->cartes[i]->getCouleur() == couleurCarteJouer) { //si aucune carte n'a été joué ou que la couleur de la carte correspond à la première carte joué pour le pli
                 indexCartesDispo.push_back(i); //ajouter index de la carte à la liste des cartes disponibles
             }
         }
