@@ -22,11 +22,6 @@ public:
         return this->points;
     }
 
-    void afficherCarte(){   //affichage de la carte, sa valeur et sa couleur
-        string couleur[5] = {"trefle", "carreau", "pic", "coeur", "payoo"};
-        cout << "Carte : " << this->identifiant[0] << " de " << couleur[this->identifiant[1] - 1] << " avec " << this->points << " point(s)\n";
-    }
-
     void afficherCarteCouleur(bool jouable = true){ //affiche la carte avec ses couleurs dans le terminal
         this->terminal->carteCouleurTerminal(this->getCouleur(),jouable); //le texte et l'arrière-plan du texte aura la couleur de la carte
         cout << " " << this->getValeur() << " ";//affichage du nombre de la carte
