@@ -8,6 +8,7 @@ private:
     unsigned int indexPapayoo = 0;
     unsigned int numManche = 1;
     unsigned int nombreManches = 0;
+    TerminalInterface* terminal = new TerminalInterface;
 public:
     Jeu() {
         unsigned int nombreJoueursHumains = 0;
@@ -15,12 +16,12 @@ public:
         unsigned int index = 0;
         for (unsigned int couleur = 1; couleur <= 4; couleur++) {
             for (unsigned int valeur = 1; valeur <= 10; ++valeur) {
-                this->cartes[index] = new Carte(valeur, couleur, 0);
+                this->cartes[index] = new Carte(valeur, couleur, 0, terminal);
                 index++;
             }
         }
         for (unsigned int valeur = 1; valeur <= 20; ++valeur) {
-            this->cartes[index] = new Carte(valeur, 5, valeur);
+            this->cartes[index] = new Carte(valeur, 5, valeur, terminal);
             index++;
         }
 
@@ -46,12 +47,12 @@ public:
         }
 
         for (unsigned int nbr = 0; nbr < nombreJoueursHumains; nbr++) {
-            this->joueurs.push_back(new Humain("J" + to_string(nbr)));
+            this->joueurs.push_back(new Humain("J" + to_string(nbr),terminal));
         }
         for (unsigned int nbr = 0; nbr < nombreJoueurs - nombreJoueursHumains; nbr++) {
             this->joueurs.push_back(new Bot("Bot" + to_string(nbr)));
         }
-        this->pliActuel = new Pli(this->joueurs);
+        this->pliActuel = new Pli(this->joueurs, terminal);
     }
 
     void melangerTableau(Carte *tableau[], int taille) { //fonction pour mélanger un tableau
@@ -112,14 +113,14 @@ public:
                 this->pliActuel->nouveauPli(joueurDebute);
                 joueurDebute = this->pliActuel->commencerPli(this->symboleDe);
                 this->affichageScore();
-                attendre();
+                this->terminal->attendre();
             }
             this->numManche++;
         }
-        clearTerminal();
+        this->terminal->clearTerminal();
         cout << "\n score finale: \n";
         this->affichageScore();
-        attendre();
+        this->terminal->attendre();
     }
 
     void affichageManche(){

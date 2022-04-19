@@ -2,11 +2,13 @@ class Carte {
 private:
     unsigned int identifiant[2];
     unsigned int points;
+    TerminalInterface* terminal;
 public:
-    Carte(unsigned int valeur, unsigned int couleur, unsigned int points){
+    Carte(unsigned int valeur, unsigned int couleur, unsigned int points, TerminalInterface* terminal){
         this->identifiant[0] = valeur;
         this->identifiant[1] = couleur;
         this->points = points;
+        this->terminal = terminal;
     }
     unsigned int getValeur(){
         return this->identifiant[0];
@@ -39,12 +41,12 @@ public:
             couleur = 7;
         }
         if (jouable){
-            couleurTerminal(0,couleur);
+            this->terminal->couleurTerminal(0,couleur);
         }else{
-            couleurTerminal(couleur,0);
+            this->terminal->couleurTerminal(couleur,0);
         }
         cout << " " << this->getValeur() << " ";
-        resetCouleurTerminal();
+        this->terminal->resetCouleurTerminal();
         cout << " ";
     }
 

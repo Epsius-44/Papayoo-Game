@@ -9,7 +9,7 @@
 
 using namespace std;
 
-#include "classe/couleurConsole.h"
+#include "classe/terminalInterface.h"
 #include "classe/carte.h"
 #include "classe/joueur.h"
 #include "classe/humain.h"

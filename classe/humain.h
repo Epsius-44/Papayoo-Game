@@ -1,6 +1,10 @@
 class Humain : public Joueur {
+private:
+    TerminalInterface* terminal;
 public:
-    Humain(string nom) : Joueur(nom) {}
+    Humain(string nom,TerminalInterface* terminal) : Joueur(nom) {
+        this->terminal = terminal;
+    }
 
     virtual vector<Carte *> donneTroisCarte() {
         vector<int> carteSelectionnable;
@@ -50,7 +54,7 @@ public:
             cin.clear();
             cin.ignore( numeric_limits<streamsize>::max(), '\n' );
         }
-        clearTerminal();
+        this->terminal->clearTerminal();
         return elementSelectJoueur;
     }
 };
