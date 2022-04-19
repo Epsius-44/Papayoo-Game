@@ -110,8 +110,7 @@ public:
             unsigned int joueurDebute = (this->numManche - 1) % this->joueurs.size();
             this->initialisationManche();
             for (int i = 0; i < 60 / this->joueurs.size(); i++) {
-                this->pliActuel->nouveauPli(joueurDebute);
-                joueurDebute = this->pliActuel->commencerPli(this->symboleDe);
+                joueurDebute = this->pliActuel->commencerPli(this->symboleDe,joueurDebute);
                 this->affichageScore();
                 this->terminal->attendre();
             }
