@@ -110,20 +110,16 @@ public:
             this->initialisationManche();
             for (int i = 0; i < 60 / this->joueurs.size(); i++) {
                 this->pliActuel->nouveauPli(joueurDebute);
-                joueurDebute = this->pliActuel->commencerPli();
+                joueurDebute = this->pliActuel->commencerPli(this->symboleDe);
                 this->affichageScore();
-                this->numManche++;
+                attendre();
             }
-            if (mancheRecommence+1!=nombreManches){
-            cout << "\n appuyer sur entrée pour lancer la prochaine manche";
-            cin >> vide;
-            }
+            this->numManche++;
         }
         clearTerminal();
         cout << "\n score finale: \n";
         this->affichageScore();
-        cout << "\n appuyer sur entrée pour quitter le jeu";
-        cin >> vide;
+        attendre();
     }
 
     void affichageManche(){
@@ -131,7 +127,7 @@ public:
     }
 
     void affichageScore(){
-        cout << "\n*****************************************\nscores:";
+        cout << "\n*****************************************\nscores:\n";
         for (int j = 0; j<this->joueurs.size();j++){
             cout << this->joueurs[j]->getNom() << ": " << this->joueurs[j]->getPoints()<<" points\n";
         }

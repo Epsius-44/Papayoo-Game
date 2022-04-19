@@ -97,10 +97,10 @@ public:
 
     virtual void suppimerCarte(Carte* carte) {
         int index = 0;
-        while (this->cartes[index]->getCouleur()!=carte->getCouleur() or this->cartes[index]->getValeur()!=carte->getValeur() or index==this->cartes.size()-1){
+        while (index!=this->cartes.size() and (this->cartes[index]->getCouleur()!=carte->getCouleur() or this->cartes[index]->getValeur()!=carte->getValeur())){
             index++;
         }
-        if (this->cartes[index]->getCouleur()==carte->getCouleur() and this->cartes[index]->getValeur()==carte->getValeur()){
+        if (index!=this->cartes.size()){
             this->suppimerCarteIndex(index);
         }
     }

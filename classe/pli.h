@@ -51,13 +51,26 @@ public:
         this->cartesJouer.erase(this->cartesJouer.begin(), this->cartesJouer.end());
         this->setIdJoueurDebute(idJoueurDebute);
     }
-    unsigned int commencerPli(){
+
+    void affichagePapayoo(unsigned int papayoo){
+            int couleurs[4] = {2, 14, 9, 12};
+            cout << "\nle papayoo est: ";
+            couleurTerminal(0, couleurs[papayoo-1]);
+            cout << " 7 ";
+            resetCouleurTerminal();
+            cout << "\n";
+    }
+
+    unsigned int commencerPli(unsigned int papayoo){
         unsigned int pointsPli=0;
         unsigned int joueurGagnePli = 0;
         for (int j = 0; j < this->joueurs.size(); j++){
+            clearTerminal();
+            this->affichagePapayoo(papayoo);
             this->affichageCartePli();
             this->ajouterCarteJouer(this->joueurs[(this->getIdJoueurDebute()+j)%this->joueurs.size()]->jouerUneCarte(this->cartesJouer));
         }
+        clearTerminal();
         this->affichageCartePli();
         joueurGagnePli=this->trouveGagnantPli();
         pointsPli=this->calculPointPli();
