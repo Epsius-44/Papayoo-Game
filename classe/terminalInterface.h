@@ -1,7 +1,7 @@
 class TerminalInterface {
 private:
     HANDLE H = GetStdHandle(STD_OUTPUT_HANDLE); //gestion du terminal
-    const int couleurCarte[4] = {2, 14, 9, 12};
+    const int couleurCarte[5] = {2, 14, 9, 12,7};
 public:
     void couleurTerminal(int textColor, int backgroundColor) {
         /*couleur: 0: noir
@@ -21,6 +21,14 @@ public:
         14: jaune fluo
         15: blanc*/
         SetConsoleTextAttribute(H, backgroundColor * 16 + textColor); //modifier la couleur du fond et du texte du texte qui va être affiché dans la console
+    }
+
+    void carteCouleurTerminal(unsigned int couleurCarteAfficher, bool jouable=true){ //affichage des couleurs pour les cartes
+        if (jouable){
+            this->couleurTerminal(0,this->couleurCarte[couleurCarteAfficher-1]); //si la carte peut être jouée / sélectionné
+        }else{
+            this->couleurTerminal(this->couleurCarte[couleurCarteAfficher-1],0); //si la carte ne peut pas être jouée / sélectionné
+        }
     }
 
     void resetCouleurTerminal() {

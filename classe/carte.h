@@ -28,23 +28,7 @@ public:
     }
 
     void afficherCarteCouleur(bool jouable = true){
-        int couleur = 0;
-        if (this->getCouleur()==1){
-            couleur = 2;
-        } else if (this->getCouleur()==2){
-            couleur = 14;
-        } else if (this->getCouleur()==3){
-            couleur = 9;
-        } else if (this->getCouleur()==4){
-            couleur = 12;
-        }else{
-            couleur = 7;
-        }
-        if (jouable){
-            this->terminal->couleurTerminal(0,couleur);
-        }else{
-            this->terminal->couleurTerminal(couleur,0);
-        }
+        this->terminal->carteCouleurTerminal(this->getCouleur(),jouable);
         cout << " " << this->getValeur() << " ";
         this->terminal->resetCouleurTerminal();
         cout << " ";

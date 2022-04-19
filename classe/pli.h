@@ -56,7 +56,7 @@ public:
     void affichagePapayoo(unsigned int papayoo){ //affiche la carte sélectionnée en tant que papayoo
             int couleurs[4] = {2, 14, 9, 12}; //liste des couleurs dans le terminal par rapport à la couleur des cartes
             cout << "\nle papayoo est: ";
-            this->terminal->couleurTerminal(0, couleurs[papayoo-1]); //change la couleur de ce qui va être affiché dans le terminal par la couleur du papayoo
+            this->terminal->carteCouleurTerminal(papayoo);//change la couleur de ce qui va être affiché dans le terminal par la couleur de la carte du papayoo
             cout << " 7 "; //affiche le 7 désigné comme le papayoo
         this->terminal->resetCouleurTerminal(); //remet à 0 la couleur de ce qui va être affiché dans le terminal
             cout << "\n"; //reviens à la ligne
