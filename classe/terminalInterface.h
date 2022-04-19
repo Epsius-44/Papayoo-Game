@@ -1,7 +1,7 @@
 class TerminalInterface {
 private:
     HANDLE H = GetStdHandle(STD_OUTPUT_HANDLE); //gestion du terminal
-    const int couleurCarte[4] = {2, 14, 9, 12,7};
+    const int couleurCarte[4] = {2, 14, 9, 12};
 public:
     void couleurTerminal(int textColor, int backgroundColor) {
         /*couleur: 0: noir
