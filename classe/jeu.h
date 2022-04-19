@@ -126,17 +126,14 @@ public:
     }
 
     void affichageManche(){
-        cout << endl;
-        cout << "manche n° " << this->numManche << " / " << this->nombreManches << endl;
+        cout << "\nmanche n° " << this->numManche << " / " << this->nombreManches << "\n";
     }
 
     void affichageScore(){
-        cout << endl;
-        cout << "*****************************************" << endl;
-        cout << "scores: " << endl;
+        cout << "\n*****************************************\nscores:";
         for (int j = 0; j<this->joueurs.size();j++){
-            cout << this->joueurs[j]->getNom() << ": " << this->joueurs[j]->getPoints()<<" points" << endl;
+            cout << this->joueurs[j]->getNom() << ": " << this->joueurs[j]->getPoints()<<" points\n";
         }
-        cout << "*****************************************" << endl;
+        cout << "*****************************************\n";
     }
 };

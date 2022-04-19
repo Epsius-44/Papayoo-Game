@@ -10,7 +10,7 @@ public:
 
     void ajouterCarteJouer(Carte* carte) {
         this->cartesJouer.insert(this->cartesJouer.end(), carte);
-        cout << "point: " << carte->getPoints() << endl;
+        cout << "point: " << carte->getPoints() << "\n";
     }
 
     unsigned int calculPointPli() {

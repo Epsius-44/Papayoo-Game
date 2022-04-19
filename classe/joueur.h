@@ -52,12 +52,11 @@ public:
     int unsigned lancerDe() {
         int couleurs[4] = {2, 14, 9, 12};
         int resultDe = rand() % 4 + 1;
-        cout << endl;
-        cout << this->getNom() << " à lancé le dé et le papayoo est : ";
+        cout << "\n" << this->getNom() << " à lancé le dé et le papayoo est : ";
         couleurTerminal(0, couleurs[resultDe-1]);
         cout << " 7 ";
         resetCouleurTerminal();
-        cout << endl;
+        cout << "\n";
         return resultDe;
     }
 

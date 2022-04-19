@@ -22,7 +22,7 @@ public:
 
     void afficherCarte(){
         string couleur[5] = {"trefle", "carreau", "pic", "coeur", "payoo"};
-        cout << "Carte : " << this->identifiant[0] << " de " << couleur[this->identifiant[1] - 1] << " avec " << this->points << " point(s) " << endl;
+        cout << "Carte : " << this->identifiant[0] << " de " << couleur[this->identifiant[1] - 1] << " avec " << this->points << " point(s)\n";
     }
 
     void afficherCarteCouleur(bool jouable = true){
