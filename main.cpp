@@ -1,21 +1,26 @@
 #include "iostream" // pour cin / cout
 #include "vector" // pour time()
-#include "stdlib.h"     /* srand, rand */
+#include "stdlib.h"     // srand, rand
+#include "cmath" //round
 #include "cassert"
 #include "algorithm"
-#include "random"
+#include "random" //aléatoire
+#include "windows.h" //couleur du terminal
 
 using namespace std;
 
+#include "classe/terminalInterface.h"
 #include "classe/carte.h"
 #include "classe/joueur.h"
+#include "classe/humain.h"
+#include "classe/bot.h"
 #include "classe/pli.h"
 #include "classe/jeu.h"
-#include "classe/affichage.h"
+
 
 int main(int argc, char **argv)
 {
-    Jeu test(5,5);
-    test.initialisationManche();
+    Jeu partie;
+    partie.jouer(); //lancer une partie
     return 0;
 }
