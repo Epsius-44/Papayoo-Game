@@ -4,7 +4,6 @@ private:
     Pli *pliActuel{};
     unsigned int symboleDe = 0;
     Carte *cartes[60]{};
-    unsigned int joueurTour;
     unsigned int indexPapayoo = 0;
     unsigned int numManche = 1;
     unsigned int nombreManches = 0;
@@ -24,8 +23,6 @@ public:
             this->cartes[index] = new Carte(valeur, 5, valeur, terminal);
             index++;
         }
-
-        this->joueurTour = 0;
 
         cout << "Nombres de joueurs (humains et bots): ";
         while (!(cin >> nombreJoueurs) or nombreJoueurs<3 or nombreJoueurs>6){
